@@ -30,11 +30,12 @@ A custom Python script processes security alerts received from the Wazuh Manager
 
 The main objective is to reduce manual intervention during incident response and improve the speed of threat mitigation within a SOC environment.
 
-## Architecture :
+## Conception :
 
-<p align="center">
-  <img src="docs/architecture.png" alt="MISP and Wazuh Active Response Architecture" width="100%"/>
-</p>
+
+<img width="1057" height="417" alt="socconceptioou" src="https://github.com/user-attachments/assets/0f2102f1-5c0c-4e68-ab11-d73c02c8f1a2" />
+
+
 
 The solution is organized into three main layers:
 
