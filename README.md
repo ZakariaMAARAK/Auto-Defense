@@ -1,21 +1,24 @@
 # Automated Threat Detection & Response using MISP & Wazuh
 
-<p align="center">
-  <img src="https://img.shields.io/badge/MISP-Threat_Intelligence-2874A6?style=for-the-badge&logo=shield&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Wazuh-SIEM-005571?style=for-the-badge&logo=wazuh&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Python-Automation-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
-</p>
+# Automated Threat Detection & Response using MISP & Wazuh
+
+---
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Windows-Endpoint_Security-0078D6?style=for-the-badge&logo=windows&logoColor=white"/>
-  <img src="https://img.shields.io/badge/PowerShell-Scripting-5391FE?style=for-the-badge&logo=powershell&logoColor=white"/>
-  <img src="https://img.shields.io/badge/PyInstaller-Executable_Builds-333333?style=for-the-badge&logo=python&logoColor=white"/>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Active_Response-Automation-2E8B57?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Windows_Firewall-Netsh-red?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/IOC-IP%20%7C%20Domain%20%7C%20SHA256-orange?style=for-the-badge"/>
+  <!-- Row 1 -->
+  <img src="https://img.shields.io/badge/MISP-Threat%20Intelligence-0078D4?style=for-the-badge&logo=security-scorecard&logoColor=white" alt="MISP - Threat Intelligence" />
+  <img src="https://img.shields.io/badge/Wazuh-SIEM-008080?style=for-the-badge&logo=wazuh&logoColor=white" alt="Wazuh - SIEM" />
+  <img src="https://img.shields.io/badge/Python-Automation-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python - Automation" />
+  <br/>
+  <!-- Row 2 -->
+  <img src="https://img.shields.io/badge/Windows-Endpoint%20Security-0078D7?style=for-the-badge&logo=windows&logoColor=white" alt="Windows - Endpoint Security" />
+  <img src="https://img.shields.io/badge/PowerShell-Scripting-5391FE?style=for-the-badge&logo=powershell&logoColor=white" alt="PowerShell - Scripting" />
+  <img src="https://img.shields.io/badge/PyInstaller-Executable%20Builds-555555?style=for-the-badge&logo=python&logoColor=white" alt="PyInstaller - Executable Builds" />
+  <br/>
+  <!-- Row 3 -->
+  <img src="https://img.shields.io/badge/Active%20Response-Automation-28a745?style=for-the-badge&logo=githubactions&logoColor=white" alt="Active Response - Automation" />
+  <img src="https://img.shields.io/badge/Windows%20Firewall-Netsh-dc3545?style=for-the-badge&logo=windows-terminal&logoColor=white" alt="Windows Firewall - Netsh" />
+  <img src="https://img.shields.io/badge/IOC-IP%20%7C%20Domain%20%7C%20SHA256-fd7e14?style=for-the-badge&logo=target&logoColor=white" alt="IOC - IP | Domain | SHA256" />
 </p>
 
 ---
