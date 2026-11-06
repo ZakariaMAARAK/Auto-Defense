@@ -3,16 +3,16 @@
 ---
 
 <p align="center">
-  <!-- Row 1 -->
-  <img src="https://img.shields.io/badge/MISP-Threat%20Intelligence-0078D4?style=for-the-badge&logo=shield&logoColor=white" alt="MISP" />
-  <img src="https://img.shields.io/badge/Wazuh-SIEM-008080?style=for-the-badge&logo=securityscorecard&logoColor=white" alt="Wazuh" />
-  <img src="https://img.shields.io/badge/Python-Automation-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-  <img src="https://img.shields.io/badge/PowerShell-Scripting-5391FE?style=for-the-badge&logo=windowsterminal&logoColor=white" alt="PowerShell" />
+  <!-- Ligne 1 -->
+  <img src="https://img.shields.io/badge/MISP-0078D4?style=for-the-badge&logo=shield&logoColor=white" alt="MISP" />
+  <img src="https://img.shields.io/badge/Wazuh-008080?style=for-the-badge&logo=securityscorecard&logoColor=white" alt="Wazuh" />
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge&logo=windowsterminal&logoColor=white" alt="PowerShell" />
   <br/>
-  <!-- Row 2 -->
-  <img src="https://img.shields.io/badge/Windows%20Firewall-Netsh-dc3545?style=for-the-badge&logo=icloud&logoColor=white" alt="Windows Firewall" />
-  <img src="https://img.shields.io/badge/PyInstaller-Executable-555555?style=for-the-badge&logo=python&logoColor=white" alt="PyInstaller" />
-  <img src="https://img.shields.io/badge/IOC-IP%20%7C%20Domain%20%7C%20SHA256-fd7e14?style=for-the-badge&logo=target&logoColor=white" alt="IOC" />
+  <!-- Ligne 2 -->
+  <img src="https://img.shields.io/badge/Windows%20Firewall-dc3545?style=for-the-badge&logo=icloud&logoColor=white" alt="Windows Firewall" />
+  <img src="https://img.shields.io/badge/PyInstaller-555555?style=for-the-badge&logo=python&logoColor=white" alt="PyInstaller" />
+  <img src="https://img.shields.io/badge/IOC-fd7e14?style=for-the-badge&logo=target&logoColor=white" alt="IOC" />
 </p>
 
 ---
