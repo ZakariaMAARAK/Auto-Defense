@@ -11,7 +11,7 @@
   <br/>
   <!-- Ligne 2 -->
   <img src="https://img.shields.io/badge/Windows%20Firewall-dc3545?style=for-the-badge" alt="Windows Firewall" />
-  <img src="https://img.shields.io/badge/PyInstaller-555555?style=for-the-badge" alt="PyInstaller" />
+  <img src="https://img.shields.io/badge/PyInstaller-555555?style=for-the-badge&logo=python&logoColor=white" alt="PyInstaller" />
   <img src="https://img.shields.io/badge/IOC-fd7e14?style=for-the-badge" alt="IOC" />
 </p>
 
