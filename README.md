@@ -4,19 +4,15 @@
 
 <p align="center">
   <!-- Row 1 -->
-  <img src="https://img.shields.io/badge/MISP-Threat%20Intelligence-0078D4?style=for-the-badge&logo=security-scorecard&logoColor=white" alt="MISP - Threat Intelligence" />
-  <img src="https://img.shields.io/badge/Wazuh-SIEM-008080?style=for-the-badge&logo=wazuh&logoColor=white" alt="Wazuh - SIEM" />
-  <img src="https://img.shields.io/badge/Python-Automation-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python - Automation" />
+  <img src="https://img.shields.io/badge/MISP-Threat%20Intelligence-0078D4?style=for-the-badge&logo=shield&logoColor=white" alt="MISP" />
+  <img src="https://img.shields.io/badge/Wazuh-SIEM-008080?style=for-the-badge&logo=securityscorecard&logoColor=white" alt="Wazuh" />
+  <img src="https://img.shields.io/badge/Python-Automation-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/PowerShell-Scripting-5391FE?style=for-the-badge&logo=windowsterminal&logoColor=white" alt="PowerShell" />
   <br/>
   <!-- Row 2 -->
-  <img src="https://img.shields.io/badge/Windows-Endpoint%20Security-0078D7?style=for-the-badge&logo=windows&logoColor=white" alt="Windows - Endpoint Security" />
-  <img src="https://img.shields.io/badge/PowerShell-Scripting-5391FE?style=for-the-badge&logo=powershell&logoColor=white" alt="PowerShell - Scripting" />
-  <img src="https://img.shields.io/badge/PyInstaller-Executable%20Builds-555555?style=for-the-badge&logo=python&logoColor=white" alt="PyInstaller - Executable Builds" />
-  <br/>
-  <!-- Row 3 -->
-  <img src="https://img.shields.io/badge/Active%20Response-Automation-28a745?style=for-the-badge&logo=githubactions&logoColor=white" alt="Active Response - Automation" />
-  <img src="https://img.shields.io/badge/Windows%20Firewall-Netsh-dc3545?style=for-the-badge&logo=windows-terminal&logoColor=white" alt="Windows Firewall - Netsh" />
-  <img src="https://img.shields.io/badge/IOC-IP%20%7C%20Domain%20%7C%20SHA256-fd7e14?style=for-the-badge&logo=target&logoColor=white" alt="IOC - IP | Domain | SHA256" />
+  <img src="https://img.shields.io/badge/Windows%20Firewall-Netsh-dc3545?style=for-the-badge&logo=icloud&logoColor=white" alt="Windows Firewall" />
+  <img src="https://img.shields.io/badge/PyInstaller-Executable-555555?style=for-the-badge&logo=python&logoColor=white" alt="PyInstaller" />
+  <img src="https://img.shields.io/badge/IOC-IP%20%7C%20Domain%20%7C%20SHA256-fd7e14?style=for-the-badge&logo=target&logoColor=white" alt="IOC" />
 </p>
 
 ---
