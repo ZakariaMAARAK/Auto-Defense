@@ -2,10 +2,6 @@
 
 ---
 
-# Automated Threat Detection & Response using MISP & Wazuh
-
----
-
 <p align="center">
   <!-- Row 1 -->
   <img src="https://img.shields.io/badge/MISP-Threat%20Intelligence-0078D4?style=for-the-badge&logo=security-scorecard&logoColor=white" alt="MISP - Threat Intelligence" />
