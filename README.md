@@ -1,19 +1,20 @@
 # Automated Threat Detection & Response using MISP & Wazuh
 
 <p align="center">
-  <img src="https://img.shields.io/badge/MISP-Threat_Intelligence-2874A6?style=for-the-badge&logo=opensourceinitiative&logoColor=white"/>
+  <img src="https://img.shields.io/badge/MISP-Threat_Intelligence-2874A6?style=for-the-badge&logo=shield&logoColor=white"/>
   <img src="https://img.shields.io/badge/Wazuh-SIEM-005571?style=for-the-badge&logo=wazuh&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Python-Automation-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-Automation-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
   <img src="https://img.shields.io/badge/Windows-Endpoint_Security-0078D6?style=for-the-badge&logo=windows&logoColor=white"/>
+  <img src="https://img.shields.io/badge/PowerShell-Scripting-5391FE?style=for-the-badge&logo=powershell&logoColor=white"/>
   <img src="https://img.shields.io/badge/PyInstaller-Executable_Builds-333333?style=for-the-badge&logo=python&logoColor=white"/>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Active_Response-Automation-2E8B57?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Firewall-Netsh-red?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Windows_Firewall-Netsh-red?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/IOC-IP%20%7C%20Domain%20%7C%20SHA256-orange?style=for-the-badge"/>
 </p>
 
@@ -29,24 +30,11 @@ A custom Python script processes security alerts received from the Wazuh Manager
 
 The main objective is to reduce manual intervention during incident response and improve the speed of threat mitigation within a SOC environment.
 
-<p align="center">
-  <img src="https://github.com/ZakariaMAARAK/misp-wazuh-automated-threat-response/blob/main/docs/architecture.png" alt="MISP and Wazuh Active Response Architecture" width="100%"/>
-</p>
-
-## Technologies and frameworks :
-
-- MISP (Malware Information Sharing Platform)
-- Wazuh SIEM
-- Wazuh Active Response
-- Python
-- PyInstaller
-- Windows Firewall (Netsh)
-- Windows Hosts File
-- JSON
-- PowerShell
-- Windows Endpoint Security
-
 ## Architecture :
+
+<p align="center">
+  <img src="docs/architecture.png" alt="MISP and Wazuh Active Response Architecture" width="100%"/>
+</p>
 
 The solution is organized into three main layers:
 
@@ -74,6 +62,19 @@ Depending on the detected IOC type, the script performs the following actions:
 | `domain` | Block the domain through the Windows Hosts file |
 | `sha256` | Identify and remove the matching malicious file |
 | All actions | Generate operational logs |
+
+## Technologies and frameworks :
+
+- MISP (Malware Information Sharing Platform)
+- Wazuh SIEM
+- Wazuh Active Response
+- Python
+- PyInstaller
+- Windows Firewall (Netsh)
+- Windows Hosts File
+- JSON
+- PowerShell
+- Windows Endpoint Security
 
 ## Getting started :
 
@@ -279,33 +280,6 @@ Verify the following:
 Repeat the validation process for each supported IOC type.
 
 **Testing note:** Use controlled test indicators and harmless test files in an isolated lab. A successful ping command alone does not prove that every mitigation action has executed successfully.
-
-## Project Structure :
-
-```text
-misp-wazuh-automated-threat-response/
-│
-├── README.md
-│
-├── docs/
-│   └── architecture.png
-│
-├── scripts/
-│   ├── misp-ar.py
-│   └── requirements.txt
-│
-├── wazuh/
-│   ├── local_rules.xml
-│   └── ossec.conf.example
-│
-├── screenshots/
-│   ├── misp-ioc.png
-│   ├── wazuh-alert.png
-│   ├── active-response.png
-│   └── operational-logs.png
-│
-└── LICENSE
-```
 
 ## Expected Results :
 
