@@ -38,7 +38,7 @@ The solution is organized into three main layers:
 **1. Threat Intelligence & Detection Layer**
 
 - MISP platform for managing and sharing threat intelligence.
-- IOC identification (IP addresses, domains, SHA256 hashes).
+- IoC identification (IP addresses, domains, SHA256 hashes).
 - Wazuh Manager for security event processing.
 - Custom Wazuh detection rules for MISP-related alerts.
 
@@ -51,9 +51,9 @@ The solution is organized into three main layers:
 
 **3. Automated Threat Mitigation Layer**
 
-Depending on the detected IOC type, the script performs the following actions:
+Depending on the detected IoC type, the script performs the following actions:
 
-| IOC Type | Automated Action |
+| IoC Type | Automated Action |
 |---|---|
 | `ip-src` | Block the IP address using Windows Firewall |
 | `domain` | Block the domain through the Windows Hosts file |
@@ -92,7 +92,7 @@ Before starting the implementation, make sure you have:
 
 Access your MISP platform and configure the threat intelligence indicators that will be used for testing.
 
-The lab focuses on three types of Indicators of Compromise (IOCs):
+The lab focuses on three types of Indicators of Compromise (IoCs):
 
 - Malicious IP addresses.
 - Malicious domain names.
@@ -106,7 +106,7 @@ On the Wazuh Manager, navigate to the local rules configuration file:
 
 `/var/ossec/etc/rules/local_rules.xml`
 
-Create custom rules to identify MISP-related events according to their IOC types.
+Create custom rules to identify MISP-related events according to their IoC types.
 
 The implemented rules include:
 
@@ -177,7 +177,7 @@ The SHA256 hash must be verified against the actual file before deletion.
 
 **5. main()**
 
-Processes the JSON input, identifies the IOC type and value, and executes the appropriate mitigation function.
+Processes the JSON input, identifies the IoC type and value, and executes the appropriate mitigation function.
 
 ### STEP 4 : Package the Python Script using PyInstaller
 
@@ -274,7 +274,7 @@ Verify the following:
 - The appropriate mitigation action is executed.
 - The execution result is recorded in `active-responses.log`.
 
-Repeat the validation process for each supported IOC type.
+Repeat the validation process for each supported IoC type.
 
 **Testing note:** Use controlled test indicators and harmless test files in an isolated lab. A successful ping command alone does not prove that every mitigation action has executed successfully.
 
@@ -292,7 +292,7 @@ The implementation demonstrates the ability to automate several threat mitigatio
 ## Security Considerations :
 
 - Active Response scripts must run with appropriate privileges.
-- Validate IOC values before executing system commands.
+- Validate IoC values before executing system commands.
 - Verify file hashes before deleting files.
 - Avoid using real malicious indicators on production systems.
 - Prevent duplicate firewall rules and Hosts file entries.
@@ -302,7 +302,7 @@ The implementation demonstrates the ability to automate several threat mitigatio
 
 Through this hands-on lab, I gained practical experience in:
 
-- Threat Intelligence and IOC management.
+- Threat Intelligence and IoC management.
 - SIEM integration and security event monitoring.
 - Wazuh Active Response configuration.
 - Python-based security automation.
