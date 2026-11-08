@@ -21,9 +21,9 @@
 
 This project aims to implement an automated cybersecurity defense solution by integrating **MISP (Malware Information Sharing Platform)** with **Wazuh SIEM Active Response**.
 
-The solution leverages Threat Intelligence Indicators of Compromise (IOCs), such as malicious IP addresses, domains, and SHA256 hashes, to trigger automated mitigation actions on monitored Windows endpoints.
+The solution leverages Threat Intelligence Indicators of Compromise (IoCs), such as malicious IP addresses, domains, and SHA256 hashes, to trigger automated mitigation actions on monitored Windows endpoints.
 
-A custom Python script processes security alerts received from the Wazuh Manager and executes the corresponding response action according to the detected IOC type.
+A custom Python script processes security alerts received from the Wazuh Manager and executes the corresponding response action according to the detected IoC type (IPs, Domains, SHA256).
 
 The main objective is to reduce manual intervention during incident response and improve the speed of threat mitigation within a SOC environment.
 
