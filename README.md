@@ -1,6 +1,5 @@
 # Automated Threat Detection & Response using MISP & Wazuh
 
----
 
 <p align="center">
   <!-- Ligne 1 -->
