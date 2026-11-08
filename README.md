@@ -1,317 +1,172 @@
-# Automated Threat Detection & Response using MISP & Wazuh
+# 🛡️ MISP + Wazuh Active Response: Automated Threat Mitigation
 
+> Automating cyber defense: Wazuh consumes **MISP** threat intelligence and a custom Python Active Response script blocks malicious IPs, sinkholes malicious domains and purges malicious files on Windows endpoints, with no manual intervention.
 
-<p align="center">
-  <!-- Ligne 1 -->
-  <img src="https://img.shields.io/badge/MISP-0078D4?style=for-the-badge" alt="MISP" />
-  <img src="https://img.shields.io/badge/Wazuh-008080?style=for-the-badge" alt="Wazuh" />
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-  <img src="https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge" alt="PowerShell" />
-  <br/>
-  <!-- Ligne 2 -->
-  <img src="https://img.shields.io/badge/Windows%20Firewall-dc3545?style=for-the-badge" alt="Windows Firewall" />
-  <img src="https://img.shields.io/badge/PyInstaller-555555?style=for-the-badge&logo=python&logoColor=white" alt="PyInstaller" />
-  <img src="https://img.shields.io/badge/IOC-fd7e14?style=for-the-badge" alt="IOC" />
-</p>
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
+![Wazuh](https://img.shields.io/badge/Wazuh-SIEM%2FXDR-0A66C2)
+![MISP](https://img.shields.io/badge/MISP-Threat%20Intel-orange)
+![Platform](https://img.shields.io/badge/Endpoint-Windows-lightgrey?logo=windows)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
-## Overview :
+## 📌 Overview
 
-This project aims to implement an automated cybersecurity defense solution by integrating **MISP (Malware Information Sharing Platform)** with **Wazuh SIEM Active Response**.
+Manual response to threat intelligence is slow. This project closes the gap between **detection** and **response** by integrating:
 
-The solution leverages Threat Intelligence Indicators of Compromise (IoCs), such as malicious IP addresses, domains, and SHA256 hashes, to trigger automated mitigation actions on monitored Windows endpoints.
+- **MISP** (Malware Information Sharing Platform): source of Indicators of Compromise (IoCs)
+- **Wazuh** (SIEM/XDR): correlates events with MISP IoCs and triggers Active Response
+- **A custom Python script** (`misp-ar`), compiled to `.exe` with PyInstaller, that executes the mitigation on the endpoint
 
-A custom Python script processes security alerts received from the Wazuh Manager and executes the corresponding response action according to the detected IoC type (IPs, Domains, SHA256).
+| IoC type (MISP) | Automated action | Mechanism |
+|---|---|---|
+| `ip-src` / IP address | Block inbound traffic | Windows Firewall rule via `netsh` |
+| `domain` | Sinkhole the domain | Redirect to `0.0.0.0` in the `hosts` file |
+| `sha256` | Delete the malicious file | `os.remove()` on the detected path |
 
-The main objective is to reduce manual intervention during incident response and improve the speed of threat mitigation within a SOC environment.
+Every action and error is written to an audit log (`active-responses.log`).
 
-## Conception :
+## 🏗️ Architecture
 
+The diagram covers both the **build/deploy pipeline** (Python script → PyInstaller → `.exe` → agent) and the **runtime detection/response flow**.
 
-<img width="1057" height="417" alt="socconceptioou" src="https://github.com/user-attachments/assets/0f2102f1-5c0c-4e68-ab11-d73c02c8f1a2" />
+```mermaid
+flowchart LR
+    subgraph BUILD["🔨 Build and Deploy (PyInstaller)"]
+        direction TB
+        PY["misp-ar.py<br/>Python source"] -->|"pyinstaller --onefile -w"| EXE["misp-ar.exe<br/>standalone executable"]
+        EXE -->|"copy to active-response/bin"| DEP["Deploy on endpoint"]
+        DEP -->|"Restart-Service WazuhSvc"| AG
+    end
 
+    MISP["MISP Platform<br/>IoCs: IP, Domain, SHA256"] -->|MISP Alerts| WM
+    subgraph MC[Monitoring Center]
+        WM["Wazuh Manager SIEM<br/>Rules 200003 and 200004"] -->|Trigger Active Response| GW[Firewall / Gateway]
+    end
+    GW -->|Encrypted command via VPN tunnel| FW
+    subgraph EP[Remote Site / Windows Endpoint]
+        FW[Firewall] --> AG[Wazuh Agent Service]
+        AG -->|JSON via stdin| AR["Active Response script<br/>misp-ar.exe"]
+        AR -->|IP| B1["1. Block IP<br/>netsh advfirewall"]
+        AR -->|Domain| B2["2. Block domain<br/>hosts to 0.0.0.0"]
+        AR -->|SHA256| B3["3. Purge file<br/>os.remove"]
+        AR -.-> LOG[("Audit log<br/>active-responses.log")]
+    end
+    EXE -.->|"is the executable launched by"| AR
+```
 
+> 💡 The original lab diagram is kept in `docs/architecture.png`.
 
-The solution is organized into three main layers:
+## 📁 Repository Structure
 
-**1. Threat Intelligence & Detection Layer**
+```
+.
+├── .github/workflows/
+│   └── build.yml             # CI: builds misp-ar.exe with PyInstaller
+├── src/
+│   └── misp-ar.py            # Active Response script
+├── config/
+│   ├── ossec.conf.snippet    # <command> + <active-response> blocks (manager)
+│   └── local_rules.xml       # Custom rules 200003 / 200004 (manager)
+├── docs/
+│   └── architecture.png      # Original lab diagram
+├── build.ps1                 # One-command PyInstaller build (+ optional deploy)
+├── requirements-build.txt    # PyInstaller dependency
+├── LICENSE
+└── README.md
+```
 
-- MISP platform for managing and sharing threat intelligence.
-- IoC identification (IP addresses, domains, SHA256 hashes).
-- Wazuh Manager for security event processing.
-- Custom Wazuh detection rules for MISP-related alerts.
+## 📂 Project Files
 
-**2. Windows Endpoint & Execution Layer**
-
-- Wazuh Agent installed on the Windows endpoint.
-- Active Response service.
-- Custom Python script (`misp-ar.py`).
-- PyInstaller to package the Python script into a standalone Windows executable.
-
-**3. Automated Threat Mitigation Layer**
-
-Depending on the detected IoC type, the script performs the following actions:
-
-| IoC Type | Automated Action |
+| File | Description |
 |---|---|
-| `ip-src` | Block the IP address using Windows Firewall |
-| `domain` | Block the domain through the Windows Hosts file |
-| `sha256` | Identify and remove the matching malicious file |
-| All actions | Generate operational logs |
+| [`src/misp-ar.py`](src/misp-ar.py) | Active Response script (source code) |
+| [`config/local_rules.xml`](config/local_rules.xml) | Custom Wazuh rules `200003` (domain) and `200004` (SHA256) |
+| [`config/ossec.conf.snippet`](config/ossec.conf.snippet) | Wazuh manager `<command>` and `<active-response>` configuration |
+| [`build.ps1`](build.ps1) | PyInstaller build and deploy script |
+| [`.github/workflows/build.yml`](.github/workflows/build.yml) | CI pipeline that builds `misp-ar.exe` |
 
-## Technologies and frameworks :
+## 🚀 Setup
 
-- MISP (Malware Information Sharing Platform)
-- Wazuh SIEM
-- Wazuh Active Response
-- Python
-- PyInstaller
-- Windows Firewall (Netsh)
-- Windows Hosts File
-- JSON
-- PowerShell
-- Windows Endpoint Security
+### 1. Endpoint (Windows agent): build with PyInstaller
 
-## Getting started :
+[PyInstaller](https://pyinstaller.org) bundles the Python script and its interpreter into a single `.exe`, so the endpoint **does not need Python installed**.
 
-### Prerequisites :
-
-Before starting the implementation, make sure you have:
-
-- A Linux environment hosting the Wazuh Manager.
-- MISP configured with threat intelligence indicators.
-- A Windows machine with Wazuh Agent installed.
-- Python installed on the Windows machine used to build the executable.
-- Administrator privileges on the Windows endpoint.
-- Network connectivity between the Wazuh Manager and Agent.
-
-## Steps to configure the solution :
-
-### STEP 1 : Configure MISP Threat Intelligence
-
-Access your MISP platform and configure the threat intelligence indicators that will be used for testing.
-
-The lab focuses on three types of Indicators of Compromise (IoCs):
-
-- Malicious IP addresses.
-- Malicious domain names.
-- Malicious file SHA256 hashes.
-
-These indicators will be used to generate security events processed by Wazuh.
-
-### STEP 2 : Configure Wazuh Detection Rules
-
-On the Wazuh Manager, navigate to the local rules configuration file:
-
-`/var/ossec/etc/rules/local_rules.xml`
-
-Create custom rules to identify MISP-related events according to their IoC types.
-
-The implemented rules include:
-
-- **Rule ID 200003:** Detect malicious domains using the `misp.type` field.
-- **Rule ID 200004:** Detect malicious SHA256 hashes using the `misp.type` field.
-
-The rules are associated with the MISP parent detection rule (100622).
-
-Example rule configuration:
-
-```xml
-<group name="misp,active-response,">
-
-  <rule id="200003" level="12">
-    <if_sid>100622</if_sid>
-    <field name="misp.type">^domain$</field>
-    <description>MISP - Detected malicious domain: $(misp.value)</description>
-  </rule>
-
-  <rule id="200004" level="12">
-    <if_sid>100622</if_sid>
-    <field name="misp.type">^sha256$</field>
-    <description>MISP - Detected malicious file hash (SHA256): $(misp.value)</description>
-  </rule>
-
-</group>
-```
-
-**Note:** Adapt the parent rule ID and field names to your actual MISP integration and Wazuh alert structure.
-
-### STEP 3 : Develop the Python Active Response Script
-
-On the Windows endpoint, navigate to:
-
-`C:\Program Files (x86)\ossec-agent\active-response\bin`
-
-Create a Python script named:
-
-`misp-ar.py`
-
-The script processes JSON alerts received through standard input (`sys.stdin`) and extracts the IOC information.
-
-The implementation contains the following functions:
-
-**1. write_log()**
-
-Records execution results, successful actions, and errors in:
-
-`C:\Program Files (x86)\ossec-agent\active-response\active-responses.log`
-
-**2. block_ip()**
-
-Uses the Windows `netsh` command to create a Windows Firewall rule that blocks traffic from a specified malicious IP address.
-
-**3. block_domain()**
-
-Modifies the Windows Hosts file:
-
-`C:\Windows\System32\drivers\etc\hosts`
-
-The malicious domain is redirected to `0.0.0.0` to prevent normal name resolution to its legitimate destination.
-
-**4. delete_file()**
-
-Handles malicious file removal by checking the file path and deleting the identified file.
-
-The SHA256 hash must be verified against the actual file before deletion.
-
-**5. main()**
-
-Processes the JSON input, identifies the IoC type and value, and executes the appropriate mitigation function.
-
-### STEP 4 : Package the Python Script using PyInstaller
-
-To execute the script on Windows without requiring a Python installation on the endpoint, package it into a standalone executable.
-
-Install PyInstaller:
+**Option A: one command (recommended)**
 
 ```powershell
-pip install pyinstaller
+.\build.ps1            # build only -> dist\misp-ar.exe
+.\build.ps1 -Deploy    # build + copy to the agent + restart service (run as Administrator)
 ```
 
-Generate the executable:
+**Option B: manual steps**
 
 ```powershell
-pyinstaller --onefile -w misp-ar.py
-```
+pip install -r requirements-build.txt
 
-After the build process, the executable will be generated inside the `dist` directory.
+# --onefile: single standalone .exe   |   -w: no console window
+pyinstaller.exe --onefile -w --name misp-ar src\misp-ar.py
 
-Copy `misp-ar.exe` into:
-
-`C:\Program Files (x86)\ossec-agent\active-response\bin`
-
-### STEP 5 : Configure Wazuh Active Response
-
-On the Wazuh Manager, edit:
-
-`/var/ossec/etc/ossec.conf`
-
-Define the custom command used to execute the Windows response script:
-
-```xml
-<command>
-  <name>misp-active-response</name>
-  <executable>misp-ar.exe</executable>
-  <timeout_allowed>yes</timeout_allowed>
-</command>
-```
-
-Associate the command with the corresponding detection rules:
-
-```xml
-<active-response>
-  <command>misp-active-response</command>
-  <location>defined-agent-location</location>
-  <rules_id>200003,200004</rules_id>
-  <timeout>10</timeout>
-</active-response>
-```
-
-**Important:** Configure the appropriate agent execution location and response scope for your environment. Ensure the executable is deployed on the endpoint where the response must run.
-
-### STEP 6 : Restart Wazuh Services
-
-On the Windows endpoint, restart the Wazuh Agent using PowerShell:
-
-```powershell
+Copy-Item .\dist\misp-ar.exe "C:\Program Files (x86)\ossec-agent\active-response\bin\"
 Restart-Service WazuhSvc
 ```
 
-On the Wazuh Manager, restart the service:
+**Option C: download from CI**: every push builds the executable on GitHub Actions (`.github/workflows/build.yml`). Grab `misp-ar.exe` and its `.sha256` from the **Actions** artifacts, or from **Releases** when you push a tag:
 
 ```bash
-sudo systemctl restart wazuh-manager
+git tag v1.0.0 && git push origin v1.0.0
 ```
 
-Verify that both services are running correctly before proceeding with the tests.
+> 🔐 Verify the checksum before deploying: `Get-FileHash .\misp-ar.exe -Algorithm SHA256`
 
-### STEP 7 : Test and Validate Automated Responses
+### 2. Wazuh manager
 
-Access the Wazuh Dashboard through your browser:
+1. Add the configuration from [`config/ossec.conf.snippet`](config/ossec.conf.snippet) to `/var/ossec/etc/ossec.conf`
+2. Add the rules from [`config/local_rules.xml`](config/local_rules.xml) to `/var/ossec/etc/rules/local_rules.xml`
+3. Restart the manager:
+   ```bash
+   sudo service wazuh-manager restart
+   ```
 
-`https://<WAZUH_MANAGER_IP>`
+> The rules depend on parent rule `100622` (the MISP integration rule), so the MISP ↔ Wazuh integration must already be in place.
 
-Navigate to:
+## 🧪 Testing
 
-**Threat Intelligence → Threat Hunting → Events**
+1. Open the Wazuh dashboard → **Threat Intelligence → Threat Hunting → Events**
+2. On the Windows endpoint, trigger a MISP-listed domain:
+   ```powershell
+   ping office.oiqezet.com
+   ```
+3. Verify the response:
+   ```powershell
+   Get-Content "C:\Program Files (x86)\ossec-agent\active-response\active-responses.log" -Tail 20
+   Select-String "office.oiqezet.com" C:\Windows\System32\drivers\etc\hosts
+   ```
 
-Generate a controlled test event using a test domain configured in your MISP integration.
+Expected: the alert appears in Wazuh, the log shows a successful execution, and the domain resolves to `0.0.0.0`.
 
-Example:
+## 📈 Results
 
-```powershell
-ping office.oiqezet.com
-```
+- ⏱️ Response time reduced from manual triage to **seconds**
+- 🔁 Fully automated pipeline: **MISP → Wazuh → Endpoint**
+- 🧾 Full audit trail of every automated action
 
-This command can generate a DNS lookup event if the domain is resolved through the configured monitoring environment.
+## 🔮 Possible Improvements
 
-Verify the following:
+- Add a dedicated rule for `ip-src` IoCs
+- Auto-expire blocks (the manager sends a `delete` command after the timeout, already handled by the script)
+- Quarantine files instead of deleting them
+- Cross-platform version for Linux endpoints (`iptables` / `nftables`)
+- Send results back to MISP as sightings
 
-- The corresponding MISP-related alert is generated.
-- Wazuh identifies the matching custom detection rule.
-- Active Response is triggered on the Windows endpoint.
-- The appropriate mitigation action is executed.
-- The execution result is recorded in `active-responses.log`.
+## ⚠️ Disclaimer
 
-Repeat the validation process for each supported IoC type.
+For **educational and lab use**. Test in an isolated environment before any production deployment: automated blocking and deletion can cause false-positive outages. Never commit real credentials or internal IP addresses.
 
-**Testing note:** Use controlled test indicators and harmless test files in an isolated lab. A successful ping command alone does not prove that every mitigation action has executed successfully.
+## 📄 License
 
-## Expected Results :
+MIT. See [LICENSE](LICENSE).
 
-The implementation demonstrates the ability to automate several threat mitigation operations:
+## 👤 Author
 
-- Detection of malicious indicators through threat intelligence.
-- Automated response triggered by Wazuh SIEM.
-- IP address blocking through Windows Firewall.
-- Domain blocking through the Windows Hosts file.
-- SHA256-based malicious file identification and removal.
-- Operational logging for incident response traceability.
-
-## Security Considerations :
-
-- Active Response scripts must run with appropriate privileges.
-- Validate IoC values before executing system commands.
-- Verify file hashes before deleting files.
-- Avoid using real malicious indicators on production systems.
-- Prevent duplicate firewall rules and Hosts file entries.
-- Monitor automated actions to avoid false positives and unintended service disruptions.
-
-## Learning Outcomes :
-
-Through this hands-on lab, I gained practical experience in:
-
-- Threat Intelligence and IoC management.
-- SIEM integration and security event monitoring.
-- Wazuh Active Response configuration.
-- Python-based security automation.
-- Windows Firewall and endpoint security.
-- Automated incident response.
-- Security event analysis and operational logging.
-
----
-
-**Project Category:** Cybersecurity | SOC Operations | Threat Intelligence | Security Automation
-
-**Author:** Zakaria MAARAK
+**Your Name**: [GitHub](https://github.com/your-username) · [LinkedIn](https://linkedin.com/in/your-profile)
