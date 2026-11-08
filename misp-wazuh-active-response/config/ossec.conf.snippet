@@ -1,4 +1,4 @@
-<!-- /var/ossec/etc/ossec.conf (Wazuh manager) -->
+<!-- Add this under the <ossec_config> section in /var/ossec/etc/ossec.conf -->
 
 <command>
   <name>misp-active-response</name>
@@ -6,20 +6,16 @@
   <timeout_allowed>yes</timeout_allowed>
 </command>
 
-<!-- Malicious domains -->
 <active-response>
-  <disabled>no</disabled>
   <command>misp-active-response</command>
   <location>local</location>
-  <rules_id>200003</rules_id>
+  <rules_id>200003</rules_id> <!-- Rule for domains -->
   <timeout>10</timeout>
 </active-response>
 
-<!-- Malicious SHA256 hashes -->
 <active-response>
-  <disabled>no</disabled>
   <command>misp-active-response</command>
   <location>local</location>
-  <rules_id>200004</rules_id>
+  <rules_id>200004</rules_id> <!-- Rule for SHA256 hashes -->
   <timeout>10</timeout>
 </active-response>
