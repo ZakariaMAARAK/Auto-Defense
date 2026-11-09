@@ -6,7 +6,6 @@
 ![Wazuh](https://img.shields.io/badge/Wazuh-SIEM%2FXDR-0A66C2)
 ![MISP](https://img.shields.io/badge/MISP-Threat%20Intel-orange)
 ![Platform](https://img.shields.io/badge/Endpoint-Windows-lightgrey?logo=windows)
-![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
