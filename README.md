@@ -47,19 +47,7 @@ flowchart LR
 
 > 💡 Tip: add your own diagram image to `docs/architecture.png` and reference it here.
 
-## 📁 Repository Structure
 
-```
-.
-├── src/
-│   └── misp-ar.py            # Active Response script
-├── config/
-│   ├── ossec.conf.snippet    # <command> + <active-response> blocks (manager)
-│   └── local_rules.xml       # Custom rules 200003 / 200004 (manager)
-├── docs/
-│   └── architecture.png      # (add your diagram)
-├── LICENSE
-└── README.md
 ```
 
 ## ⚙️ How the script works (`src/misp-ar.py`)
