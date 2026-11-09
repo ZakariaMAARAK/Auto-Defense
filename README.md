@@ -1,4 +1,4 @@
-# 🛡️ MISP + Wazuh + Python: Automated Active Response for Threat Mitigation
+# 🛡️ MISP + Wazuh Active Response: Automated Threat Mitigation
 
 > Automating cyber defense: Wazuh consumes **MISP** threat intelligence and a custom Python Active Response script blocks malicious IPs, sinkholes malicious domains and purges malicious files on Windows endpoints, with no manual intervention.
 
@@ -6,6 +6,7 @@
 ![Wazuh](https://img.shields.io/badge/Wazuh-SIEM%2FXDR-0A66C2)
 ![MISP](https://img.shields.io/badge/MISP-Threat%20Intel-orange)
 ![Platform](https://img.shields.io/badge/Endpoint-Windows-lightgrey?logo=windows)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
@@ -25,22 +26,13 @@ Manual response to threat intelligence is slow. This project closes the gap betw
 
 Every action and error is written to an audit log (`active-responses.log`).
 
-##  Conception :
-
-The diagram covers both the **build/deploy pipeline** (Python script → PyInstaller → `.exe` → agent) and the **runtime detection/response flow**.
+## 🏗️ Architecture
 
 ```mermaid
 flowchart LR
-    subgraph BUILD["🔨 Build and Deploy (PyInstaller)"]
-        direction TB
-        PY["misp-ar.py<br/>Python source"] -->|"pyinstaller --onefile -w"| EXE["misp-ar.exe<br/>standalone executable"]
-        EXE -->|"copy to active-response/bin"| DEP["Deploy on endpoint"]
-        DEP -->|"Restart-Service WazuhSvc"| AG
-    end
-
     MISP["MISP Platform<br/>IoCs: IP, Domain, SHA256"] -->|MISP Alerts| WM
     subgraph MC[Monitoring Center]
-        WM["Wazuh Manager SIEM<br/>Rules 200003 and 200004"] -->|Trigger Active Response| GW[Firewall / Gateway]
+        WM["Wazuh Manager (SIEM)<br/>Rules 200003 & 200004"] -->|Trigger Active Response| GW[Firewall / Gateway]
     end
     GW -->|Encrypted command via VPN tunnel| FW
     subgraph EP[Remote Site / Windows Endpoint]
@@ -51,66 +43,65 @@ flowchart LR
         AR -->|SHA256| B3["3. Purge file<br/>os.remove"]
         AR -.-> LOG[("Audit log<br/>active-responses.log")]
     end
-    EXE -.->|"is the executable launched by"| AR
 ```
 
-> 💡 The original lab diagram is kept in `docs/architecture.png`.
+> 💡 Tip: add your own diagram image to `docs/architecture.png` and reference it here.
+
+## 📁 Repository Structure
 
 ```
+.
+├── src/
+│   └── misp-ar.py            # Active Response script
+├── config/
+│   ├── ossec.conf.snippet    # <command> + <active-response> blocks (manager)
+│   └── local_rules.xml       # Custom rules 200003 / 200004 (manager)
+├── docs/
+│   └── architecture.png      # (add your diagram)
+├── LICENSE
+└── README.md
+```
 
-## 📂 Project Files
+## ⚙️ How the script works (`src/misp-ar.py`)
 
-| File | Description |
+| Function | Role |
 |---|---|
-| [`src/misp-ar.py`](src/misp-ar.py) | Active Response script (source code) |
-| [`config/local_rules.xml`](config/local_rules.xml) | Custom Wazuh rules `200003` (domain) and `200004` (SHA256) |
-| [`config/ossec.conf.snippet`](config/ossec.conf.snippet) | Wazuh manager `<command>` and `<active-response>` configuration |
-| [`build.ps1`](build.ps1) | PyInstaller build and deploy script |
-| [`.github/workflows/build.yml`](.github/workflows/build.yml) | CI pipeline that builds `misp-ar.exe` |
+| `write_log()` | Records every action/error to `active-responses.log` |
+| `delete_file()` | Checks the file exists and removes it; logs failures instead of crashing |
+| `block_ip()` | Creates an inbound-block Windows Firewall rule with `netsh advfirewall` |
+| `block_domain()` | Appends `0.0.0.0 <domain>` to `C:\Windows\System32\drivers\etc\hosts` |
+| `main()` | Reads the Wazuh JSON alert from `stdin`, extracts the IoC type/value and dispatches the action |
+
+Security hardening included: strict validation of IPs, domains and hashes before use, and `subprocess` called with argument lists (no shell), which prevents command injection from untrusted IoC values.
 
 ## 🚀 Setup
 
-### 1. Endpoint (Windows agent): build with PyInstaller
-
-[PyInstaller](https://pyinstaller.org) bundles the Python script and its interpreter into a single `.exe`, so the endpoint **does not need Python installed**.
-
-**Option A: one command (recommended)**
+### 1. Endpoint (Windows agent)
 
 ```powershell
-.\build.ps1            # build only -> dist\misp-ar.exe
-.\build.ps1 -Deploy    # build + copy to the agent + restart service (run as Administrator)
-```
+# Install dependency to build the executable
+pip install pyinstaller
 
-**Option B: manual steps**
+# Build a standalone .exe (no Python required on the endpoint)
+pyinstaller.exe --onefile -w src\misp-ar.py
 
-```powershell
-pip install -r requirements-build.txt
-
-# --onefile: single standalone .exe   |   -w: no console window
-pyinstaller.exe --onefile -w --name misp-ar src\misp-ar.py
-
+# Deploy
 Copy-Item .\dist\misp-ar.exe "C:\Program Files (x86)\ossec-agent\active-response\bin\"
+
+# Restart the agent
 Restart-Service WazuhSvc
 ```
 
-**Option C: download from CI**: every push builds the executable on GitHub Actions (`.github/workflows/build.yml`). Grab `misp-ar.exe` and its `.sha256` from the **Actions** artifacts, or from **Releases** when you push a tag:
-
-```bash
-git tag v1.0.0 && git push origin v1.0.0
-```
-
-> 🔐 Verify the checksum before deploying: `Get-FileHash .\misp-ar.exe -Algorithm SHA256`
-
 ### 2. Wazuh manager
 
-1. Add the configuration from [`config/ossec.conf.snippet`](config/ossec.conf.snippet) to `/var/ossec/etc/ossec.conf`
+1. Add the contents of [`config/ossec.conf.snippet`](config/ossec.conf.snippet) to `/var/ossec/etc/ossec.conf`
 2. Add the rules from [`config/local_rules.xml`](config/local_rules.xml) to `/var/ossec/etc/rules/local_rules.xml`
-3. Restart the manager:
+3. Restart:
    ```bash
    sudo service wazuh-manager restart
    ```
 
-> The rules depend on parent rule `100622` (the MISP integration rule), so the MISP ↔ Wazuh integration must already be in place.
+> Rules `200003` and `200004` use parent rule `100622` (the MISP integration rule), so the MISP ↔ Wazuh integration must already be in place.
 
 ## 🧪 Testing
 
