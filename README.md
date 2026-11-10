@@ -235,10 +235,8 @@ The MISP instance holds the events and attributes (IP, domain, SHA256 IoCs) that
 
 For **educational and lab use**. Test in an isolated environment before any production deployment: automated blocking and deletion can cause false-positive outages. Never commit real credentials or internal IP addresses.
 
-## 📄 License
 
-MIT. See [LICENSE](LICENSE).
 
 ## 👤 Author
 
-**Your Name**: [GitHub](https://github.com/your-username) · [LinkedIn](https://linkedin.com/in/your-profile)
+**Your Name**: [GitHub]() · [LinkedIn]()
