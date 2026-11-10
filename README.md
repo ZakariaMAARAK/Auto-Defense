@@ -46,7 +46,7 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 |---|---|
 | [`src/misp-ar.py`](src/misp-ar.py) | Active Response script (source code) |
 | [`config/local_rules.xml`](config/local_rules.xml) | Custom Wazuh rules `200003` (domain) and `200004` (SHA256) |
-| [`config/ossec.conf.snippet`](config/ossec.conf.snippet) | Wazuh manager `<command>` and `<active-response>` configuration |
+| [`config/ossec.conf.snippet`](config/ossec.conf) | Wazuh manager `<command>` and `<active-response>` configuration |
 | [`build.ps1`](build.ps1) | PyInstaller build and deploy script |
 | [`.github/workflows/build.yml`](.github/workflows/build.yml) | CI pipeline that builds `misp-ar.exe` |
 
