@@ -35,24 +35,10 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 
 > 💡 The original lab diagram is kept in `docs/architecture.png`.
 
-## 📁 Repository Structure
 
-```
-.
-├── .github/workflows/
-│   └── build.yml             # CI: builds misp-ar.exe with PyInstaller
-├── src/
-│   └── misp-ar.py            # Active Response script
-├── config/
-│   ├── ossec.conf.snippet    # <command> + <active-response> blocks (manager)
-│   └── local_rules.xml       # Custom rules 200003 / 200004 (manager)
-├── docs/
-│   └── architecture.png      # Original lab diagram
-├── build.ps1                 # One-command PyInstaller build (+ optional deploy)
-├── requirements-build.txt    # PyInstaller dependency
-├── LICENSE
-└── README.md
-```
+
+
+
 
 ## 📂 Project Files
 
