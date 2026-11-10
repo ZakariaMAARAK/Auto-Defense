@@ -30,7 +30,8 @@ Every action and error is written to an audit log (`active-responses.log`).
 
 The diagram covers both the **build/deploy pipeline** (Python script → PyInstaller → `.exe` → agent) and the **runtime detection/response flow**.
 
-<img width="1322" height="429" alt="image" src="https://github.com/user-attachments/assets/eba6d38c-91ca-41e4-bf22-82ddc74ec86e" />
+<img width="3960" height="1078" alt="architecture" src="https://github.com/user-attachments/assets/d96f0b7c-6b42-457d-9882-ec7d4a3cef56" />
+
 
 
 > 💡 The original lab diagram is kept in `docs/architecture.png`.
