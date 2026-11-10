@@ -1,4 +1,4 @@
-# 🛡️ MISP + Wazuh Active Response: Automated Threat Mitigation
+# 🛡️ MISP + Wazuh + Python: Automated Threat Mitigation
 
 > Automating cyber defense: Wazuh consumes **MISP** threat intelligence and a custom Python Active Response script blocks malicious IPs, sinkholes malicious domains and purges malicious files on Windows endpoints, with no manual intervention.
 
