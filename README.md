@@ -3,10 +3,9 @@
 > Automating cyber defense: Wazuh consumes **MISP** threat intelligence and a custom Python Active Response script blocks malicious IPs, sinkholes malicious domains and purges malicious files on Windows endpoints, with no manual intervention.
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
-![Wazuh](https://img.shields.io/badge/Wazuh-SIEM%2FXDR-0A66C2)
+![Wazuh]
 ![MISP](https://img.shields.io/badge/MISP-Threat%20Intel-orange)
 ![Platform](https://img.shields.io/badge/Endpoint-Windows-lightgrey?logo=windows)
-![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
