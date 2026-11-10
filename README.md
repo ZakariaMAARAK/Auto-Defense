@@ -30,30 +30,8 @@ Every action and error is written to an audit log (`active-responses.log`).
 
 The diagram covers both the **build/deploy pipeline** (Python script → PyInstaller → `.exe` → agent) and the **runtime detection/response flow**.
 
-```mermaid
-flowchart LR
-    subgraph BUILD["🔨 Build and Deploy (PyInstaller)"]
-        direction TB
-        PY["misp-ar.py<br/>Python source"] -->|"pyinstaller --onefile -w"| EXE["misp-ar.exe<br/>standalone executable"]
-        EXE -->|"copy to active-response/bin"| DEP["Deploy on endpoint"]
-        DEP -->|"Restart-Service WazuhSvc"| AG
-    end
+<img width="1322" height="429" alt="image" src="https://github.com/user-attachments/assets/eba6d38c-91ca-41e4-bf22-82ddc74ec86e" />
 
-    MISP["MISP Platform<br/>IoCs: IP, Domain, SHA256"] -->|MISP Alerts| WM
-    subgraph MC[Monitoring Center]
-        WM["Wazuh Manager SIEM<br/>Rules 200003 and 200004"] -->|Trigger Active Response| GW[Firewall / Gateway]
-    end
-    GW -->|Encrypted command via VPN tunnel| FW
-    subgraph EP[Remote Site / Windows Endpoint]
-        FW[Firewall] --> AG[Wazuh Agent Service]
-        AG -->|JSON via stdin| AR["Active Response script<br/>misp-ar.exe"]
-        AR -->|IP| B1["1. Block IP<br/>netsh advfirewall"]
-        AR -->|Domain| B2["2. Block domain<br/>hosts to 0.0.0.0"]
-        AR -->|SHA256| B3["3. Purge file<br/>os.remove"]
-        AR -.-> LOG[("Audit log<br/>active-responses.log")]
-    end
-    EXE -.->|"is the executable launched by"| AR
-```
 
 > 💡 The original lab diagram is kept in `docs/architecture.png`.
 
