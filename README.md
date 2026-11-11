@@ -56,14 +56,6 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 
 [PyInstaller](https://pyinstaller.org) bundles the Python script and its interpreter into a single `.exe`, so the endpoint **does not need Python installed**.
 
-**Option A: one command (recommended)**
-
-```powershell
-.\build.ps1            # build only -> dist\misp-ar.exe
-.\build.ps1 -Deploy    # build + copy to the agent + restart service (run as Administrator)
-```
-
-**Option B: manual steps**
 
 ```powershell
 pip install -r requirements-build.txt
@@ -75,13 +67,6 @@ Copy-Item .\dist\misp-ar.exe "C:\Program Files (x86)\ossec-agent\active-response
 Restart-Service WazuhSvc
 ```
 
-**Option C: download from CI**: every push builds the executable on GitHub Actions (`.github/workflows/build.yml`). Grab `misp-ar.exe` and its `.sha256` from the **Actions** artifacts, or from **Releases** when you push a tag:
-
-```bash
-git tag v1.0.0 && git push origin v1.0.0
-```
-
-> 🔐 Verify the checksum before deploying: `Get-FileHash .\misp-ar.exe -Algorithm SHA256`
 
 ### 2. Wazuh manager
 
