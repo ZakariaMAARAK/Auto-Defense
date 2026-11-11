@@ -10,7 +10,7 @@
 
 ---
 
-## 📌 Overview
+##  Overview:
 
 Manual response to threat intelligence is slow. This project closes the gap between **detection** and **response** by integrating:
 
@@ -28,7 +28,11 @@ Manual response to threat intelligence is slow. This project closes the gap betw
 
 Every action and error is written to an audit log (`active-responses.log`).
 
-## <a href="https://www.flaticon.com/free-icons/workflow" title="workflow icons">Workflow icons created by Haca Studio - Flaticon</a>       Workflow 
+##  Workflow:
+
+
+<img width="3960" height="1078" alt="image" src="https://github.com/user-attachments/assets/abd7b3db-cd7b-43ad-948b-bc327101f5de" />
+
 
 The diagram covers both the **build/deploy pipeline** (Python script → PyInstaller → `.exe` → agent) and the **runtime detection/response flow**.
 
@@ -42,7 +46,7 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 
 
 
-## 📂 Project Files
+##  Project Files:
 
 | File | Description |
 |---|---|
@@ -50,7 +54,7 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 | [`config/local_rules.xml`](config/local_rules.xml) | Custom Wazuh rules `200003` (domain) and `200004` (SHA256) |
 | [`config/ossec.conf.snippet`](config/ossec.conf.snippet) | Wazuh manager `<command>` and `<active-response>` configuration |
 
-## 🚀 Setup
+## Lab Setup:
 
 ### 1. Endpoint (Windows agent): build with PyInstaller
 
