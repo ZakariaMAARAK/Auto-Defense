@@ -199,12 +199,6 @@ The MISP instance holds the events and attributes (IP, domain, SHA256 IoCs) that
 - Cross-platform version for Linux endpoints (`iptables` / `nftables`)
 - Send results back to MISP as sightings
 
-## ⚠️ Disclaimer
-
-For **educational and lab use**. Test in an isolated environment before any production deployment: automated blocking and deletion can cause false-positive outages. Never commit real credentials or internal IP addresses.
-
-
-
 ## 👤 Author
 
-**Your Name**: [GitHub]() · [LinkedIn]()
+**Zakaria MAARAK**: [GitHub](https://github.com/ZakariaMAARAK) · [LinkedIn](www.linkedin.com/in/zakaria-maarak)
