@@ -10,7 +10,7 @@
 
 ---
 
-## 📌 Overview
+##  Overview:
 
 Manual response to threat intelligence is slow. This project closes the gap between **detection** and **response** by integrating:
 
@@ -28,7 +28,9 @@ Manual response to threat intelligence is slow. This project closes the gap betw
 
 Every action and error is written to an audit log (`active-responses.log`).
 
-## <a href="https://www.flaticon.com/free-icons/workflow" title="workflow icons">Workflow icons created by Haca Studio - Flaticon</a>       Workflow 
+## Workflow:
+
+<img width="3960" height="1078" alt="image" src="https://github.com/user-attachments/assets/d1dceeab-b1c0-4c0e-a9ed-40e7bc3ebfc4" />
 
 The diagram covers both the **build/deploy pipeline** (Python script → PyInstaller → `.exe` → agent) and the **runtime detection/response flow**.
 
@@ -42,7 +44,7 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 
 
 
-## 📂 Project Files
+##  Project Files:
 
 | File | Description |
 |---|---|
@@ -50,7 +52,7 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 | [`config/local_rules.xml`](config/local_rules.xml) | Custom Wazuh rules `200003` (domain) and `200004` (SHA256) |
 | [`config/ossec.conf.snippet`](config/ossec.conf.snippet) | Wazuh manager `<command>` and `<active-response>` configuration |
 
-## 🚀 Setup
+##  Setup:
 
 ### 1. Endpoint (Windows agent): build with PyInstaller
 
@@ -79,9 +81,9 @@ Restart-Service WazuhSvc
 
 > The rules depend on parent rule `100622` (the MISP integration rule), so the MISP ↔ Wazuh integration must already be in place.
 
-## 🧪 Testing
+##  Testing:
 
-1. Open the Wazuh dashboard → **Threat Intelligence → Threat Hunting → Events**
+1. Open the Wazuh daworflowshboard → **Threat Intelligence → Threat Hunting → Events**
 2. On the Windows endpoint, trigger a MISP-listed domain:
    ```powershell
    ping office.oiqezet.com
@@ -94,7 +96,7 @@ Restart-Service WazuhSvc
 
 Expected: the alert appears in Wazuh, the log shows a successful execution, and the domain resolves to `0.0.0.0`.
 
-## 🔬 Lab Walkthrough & Evidence
+## Lab Walkthrough & Evidence:
 
 Screenshots captured during the lab, in the order the workflow runs.
 
@@ -173,30 +175,7 @@ The surrounding events give the full picture of what happened on the endpoint:
 
 The MISP instance holds the events and attributes (IP, domain, SHA256 IoCs) that feed the Wazuh integration. Reviewing events here is also how additional use cases can be explored: the same pipeline blocks IPs and deletes files when the matching IoC types are detected.
 
-### ✅ What this proves
 
-| Stage | Evidence |
-|---|---|
-| IoC source | MISP events list |
-| Detection | Wazuh rule `200003` (level 12) fired on the DNS query |
-| Delivery | `wazuh-execd` passed the alert JSON to `misp-ar.exe` |
-| Mitigation | `Successfully blocked domain` in `active-responses.log` |
-| Auditability | Every step timestamped in the log |
-
-## 📈 Results
-
-- ⏱️ Response time reduced from manual triage to **seconds**
-- 🔁 Fully automated pipeline: **MISP → Wazuh → Endpoint**
-- 🧾 Full audit trail of every automated action
-
-## 🔮 Possible Improvements
-
-- Add a dedicated rule for `ip-src` IoCs
-- Auto-expire blocks (the manager sends a `delete` command after the timeout, already handled by the script)
-- Quarantine files instead of deleting them
-- Cross-platform version for Linux endpoints (`iptables` / `nftables`)
-- Send results back to MISP as sightings
-
-## 👤 Author
+## 👤 Author:
 
 **Zakaria MAARAK**: [GitHub](https://github.com/ZakariaMAARAK) · [LinkedIn](www.linkedin.com/in/zakaria-maarak)
