@@ -38,26 +38,7 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 
 <p align="center"><sub>🔍 Click the diagram to open it at full resolution.</sub></p>
 
-## 📁 Repository Structure
 
-```
-.
-├── .github/workflows/
-│   └── build.yml             # CI: builds misp-ar.exe with PyInstaller
-├── src/
-│   └── misp-ar.py            # Active Response script
-├── config/
-│   ├── ossec.conf.snippet    # <command> + <active-response> blocks (manager)
-│   └── local_rules.xml       # Custom rules 200003 / 200004 (manager)
-├── docs/
-│   ├── architecture.svg      # Architecture diagram (vector, always sharp)
-│   ├── architecture.png      # Same diagram, high-resolution PNG
-│   └── screenshots/          # Lab evidence (build, alert, log, MISP)
-├── build.ps1                 # One-command PyInstaller build (+ optional deploy)
-├── requirements-build.txt    # PyInstaller dependency
-├── LICENSE
-└── README.md
-```
 
 ## 📂 Project Files
 
