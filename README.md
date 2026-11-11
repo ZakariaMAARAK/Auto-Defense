@@ -16,7 +16,7 @@ Manual response to threat intelligence is slow. This project closes the gap betw
 
 - **MISP** (Malware Information Sharing Platform): source of Indicators of Compromise (IoCs)
 - **Wazuh** (SIEM/XDR): correlates events with MISP IoCs and triggers Active Response
-- **A custom Python script** (`misp-ar.py`), then it will be compiled to `.exe` via PyInstaller, that executes the mitigation on the endpoint
+- **A custom Python script** (`auto_misp.py`), then it will be compiled to `.exe` via PyInstaller, that executes the mitigation on the endpoint
 
   
 
@@ -48,7 +48,7 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 
 | File | Description |
 |---|---|
-| [`src/misp-ar.py`](src/misp-ar.py) | Active Response script (source code) |
+| [`src/auto_misp.py`](src/auto_misp.py) | Active Response script (source code) |
 | [`config/local_rules.xml`](config/local_rules.xml) | Custom Wazuh rules `200003` (domain) and `200004` (SHA256) |
 | [`config/ossec.conf.snippet`](config/ossec.conf.snippet) | Wazuh manager `<command>` and `<active-response>` configuration |
 
@@ -63,9 +63,9 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 pip install -r requirements-build.txt
 
 # --onefile: single standalone .exe   |   -w: no console window
-pyinstaller.exe --onefile -w --name misp-ar src\misp-ar.py
+pyinstaller.exe --onefile -w --name auto_misp src\auto_misp.py
 
-Copy-Item .\dist\misp-ar.exe "C:\Program Files (x86)\ossec-agent\active-response\bin\"
+Copy-Item .\dist\auto_misp.exe "C:\Program Files (x86)\ossec-agent\active-response\bin\"
 Restart-Service WazuhSvc
 ```
 
@@ -107,18 +107,18 @@ Screenshots captured during the lab, in the order the workflow runs.
 The script was compiled from an elevated PowerShell session inside the agent's `active-response\bin` folder:
 
 ```powershell
-pyinstaller.exe --onefile -w misp-ar.py
+pyinstaller.exe --onefile -w auto_misp.py
 ```
 
 What the output shows:
 
 | Phase | What happens |
 |---|---|
-| **Environment check** | PyInstaller 6.11.1 on Python 3.13.1 / Windows 10 is detected, and a `misp-ar.spec` build recipe is written |
+| **Environment check** | PyInstaller 6.11.1 on Python 3.13.1 / Windows 10 is detected, and a `auto_misp.spec` build recipe is written |
 | **Analysis** | PyInstaller scans the script, builds the module dependency graph, runs its hooks and collects the required DLLs and libraries |
-| **PKG** | The script and its dependencies are bundled into a single archive (`misp-ar.pkg`) |
+| **PKG** | The script and its dependencies are bundled into a single archive (`auto_misp.pkg`) |
 | **EXE** | The Windows bootloader is copied, the manifest and icon are embedded and the archive is appended. The build ends with *"Building EXE … completed successfully"* |
-| **Output** | `dist\misp-ar.exe`, a standalone executable that runs **without Python installed** |
+| **Output** | `dist\auto_misp.exe`, a standalone executable that runs **without Python installed** |
 
 > ⚠️ **Note on the warning at the top of the log:** PyInstaller states that running it as administrator is not necessary and that version 7.0 will block it. Build from a **normal (non-admin) terminal** and only elevate to copy the file into `Program Files (x86)` and restart `WazuhSvc`. Also prefer building in a separate working folder (as `build.ps1` does), so the `build/`, `dist/` and `.spec` files do not clutter the agent's `bin` directory.
 
@@ -146,7 +146,7 @@ After restarting the Wazuh agent (so the new executable is loaded), `active-resp
 
 How to read it:
 
-1. **Active response started**: `wazuh-execd` launched `misp-ar.exe`.
+1. **Active response started**: `wazuh-execd` launched `auto_misp.exe`.
 2. **Raw input received**: the Wazuh manager's JSON alert arrived on `stdin` (`"command":"add"`).
 3. **Parsed MISP data**: the script extracted the IoC type (`domain`) and value (`office.oiqezet.com`).
 4. **Successfully blocked domain**: the sinkhole entry was written to the `hosts` file.
@@ -167,7 +167,7 @@ The surrounding events give the full picture of what happened on the endpoint:
 
 - **Sysmon Event 22 (DNS query)**: the DNS lookup caused by the `ping`, which is what Wazuh correlates with the MISP IoC.
 - **Sysmon Events 1, 10 and 7**: process creation, process access and image load around the execution.
-- **Highlighted lower rows**: `misp-ar.exe` loading runtime DLLs from a `_MEI…` folder in `C:\Windows\Temp`. This is normal behavior for a `--onefile` PyInstaller executable, which unpacks itself to a temporary folder at launch. It is worth knowing because security rules can flag it as *"executable loaded from the Temp directory"*, so expect (and tune for) this kind of alert.
+- **Highlighted lower rows**: `auto_misp.exe` loading runtime DLLs from a `_MEI…` folder in `C:\Windows\Temp`. This is normal behavior for a `--onefile` PyInstaller executable, which unpacks itself to a temporary folder at launch. It is worth knowing because security rules can flag it as *"executable loaded from the Temp directory"*, so expect (and tune for) this kind of alert.
 
 ### 4️⃣ The threat intelligence source (MISP)
 
