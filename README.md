@@ -16,7 +16,9 @@ Manual response to threat intelligence is slow. This project closes the gap betw
 
 - **MISP** (Malware Information Sharing Platform): source of Indicators of Compromise (IoCs)
 - **Wazuh** (SIEM/XDR): correlates events with MISP IoCs and triggers Active Response
-- **A custom Python script** (`misp-ar`), compiled to `.exe` with PyInstaller, that executes the mitigation on the endpoint
+- **A custom Python script** (`misp-ar.py`), then it will be compiled to `.exe` via PyInstaller, that executes the mitigation on the endpoint
+
+  
 
 | IoC type (MISP) | Automated action | Mechanism |
 |---|---|---|
