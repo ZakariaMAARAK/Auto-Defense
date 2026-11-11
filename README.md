@@ -28,7 +28,7 @@ Manual response to threat intelligence is slow. This project closes the gap betw
 
 Every action and error is written to an audit log (`active-responses.log`).
 
-## 🏗️ Architecture
+## <a href="https://www.flaticon.com/free-icons/workflow" title="workflow icons">Workflow icons created by Haca Studio - Flaticon</a>       Workflow 
 
 The diagram covers both the **build/deploy pipeline** (Python script → PyInstaller → `.exe` → agent) and the **runtime detection/response flow**.
 
