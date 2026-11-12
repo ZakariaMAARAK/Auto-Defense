@@ -34,14 +34,6 @@ Every action and error is written to an audit log (`active-responses.log`).
 
 The diagram covers both the **build/deploy pipeline** (Python script → PyInstaller → `.exe` → agent) and the **runtime detection/response flow**.
 
-<p align="center">
-  <a href="docs/architecture.png">
-    <img src="docs/architecture.svg" alt="Architecture: MISP, Wazuh and Active Response workflow with PyInstaller build" width="100%">
-  </a>
-</p>
-
-<p align="center"><sub>🔍 Click the diagram to open it at full resolution.</sub></p>
-
 
 
 ##  Project Files:
