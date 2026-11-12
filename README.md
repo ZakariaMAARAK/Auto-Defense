@@ -42,7 +42,7 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 |---|---|
 | [`src/auto_misp.py`](src/auto_misp.py) | Active Response script (source code) |
 | [`config/local_rules.xml`](config/local_rules.xml) | Custom Wazuh rules `200003` (domain) and `200004` (SHA256) |
-| [`config/ossec.conf`](config/ossec.conf.snippet) | Wazuh manager `<command>` and `<active-response>` configuration |
+| [`config/ossec.conf`](config/ossec.conf) | Wazuh manager `<command>` and `<active-response>` configuration |
 
 ##  Setup:
 
