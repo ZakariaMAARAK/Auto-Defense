@@ -6,8 +6,8 @@ import hashlib
 import subprocess
 import datetime
 
-LOG_FILE = r"C:\Program Files (x86)\ossec-agent\active-response\active-responses.log"
-HOSTS_FILE = r"C:\Windows\System32\drivers\etc\hosts"
+LOG_FILE = r"C:\\Program Files (x86)\\ossec-agent\\active-response\\active-responses.log"
+HOSTS_FILE = r"C:\\Windows\\System32\\drivers\\etc\\hosts"
 
 def write_log(message):
     """Write a message to the active-response log."""
