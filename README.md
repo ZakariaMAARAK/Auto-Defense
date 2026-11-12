@@ -1,6 +1,6 @@
 # 🛡️ MISP + Wazuh Active Response: Automated Threat Mitigation
 
-> This project simultaneously neutralizes SHA256 IPs, domains and hashes via a standalone executable (.exe) independent of the Python environment.  Wazuh consumes **MISP** threat intelligence and a custom Python Active Response script blocks malicious IPs, sinkholes malicious domains and purges malicious files on Windows endpoints, with no manual intervention.
+> This project allows to simultaneously neutralizes SHA256 IPs, domains and hashes via a standalone executable (.exe) independent of the Python environment.  Wazuh consumes **MISP** threat intelligence and a custom Python Active Response script blocks malicious IPs, sinkholes malicious domains and purges malicious files on Windows endpoints, with no manual intervention.
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
 ![Wazuh](https://img.shields.io/badge/Wazuh-SIEM%2FXDR-0A66C2)
