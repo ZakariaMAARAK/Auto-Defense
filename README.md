@@ -1,6 +1,6 @@
 # 🛡️ MISP + Wazuh Active Response: Automated Threat Mitigation
 
-> Automating cyber defense: Wazuh consumes **MISP** threat intelligence and a custom Python Active Response script blocks malicious IPs, sinkholes malicious domains and purges malicious files on Windows endpoints, with no manual intervention.
+> This project simultaneously neutralizes SHA256 IPs, domains and hashes via a standalone executable (.exe) independent of the Python environment.  Wazuh consumes **MISP** threat intelligence and a custom Python Active Response script blocks malicious IPs, sinkholes malicious domains and purges malicious files on Windows endpoints, with no manual intervention.
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
 ![Wazuh](https://img.shields.io/badge/Wazuh-SIEM%2FXDR-0A66C2)
@@ -176,6 +176,6 @@ The surrounding events give the full picture of what happened on the endpoint:
 The MISP instance holds the events and attributes (IP, domain, SHA256 IoCs) that feed the Wazuh integration. Reviewing events here is also how additional use cases can be explored: the same pipeline blocks IPs and deletes files when the matching IoC types are detected.
 
 
-## 👤 Author:
 
-**Zakaria MAARAK**: [GitHub](https://github.com/ZakariaMAARAK) · [LinkedIn](www.linkedin.com/in/zakaria-maarak)
+
+Realised by **Zakaria MAARAK**: [GitHub](https://github.com/ZakariaMAARAK) · [LinkedIn](www.linkedin.com/in/zakaria-maarak)
