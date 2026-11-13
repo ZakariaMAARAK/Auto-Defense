@@ -24,7 +24,7 @@ Manual response to threat intelligence is slow. This project closes the gap betw
 |---|---|---|
 | `ip-src` / IP address | Block inbound traffic | Windows Firewall rule via `netsh` |
 | `domain` | Sinkhole the domain | Redirect to `0.0.0.0` in the `hosts` file |
-| `sha256` | Delete the malicious file | `os.remove()` on the detected path |
+| `SHA256` | Delete the malicious file | `os.remove()` on the detected path |
 
 Every action and error is written to an audit log (`active-responses.log`).
 
