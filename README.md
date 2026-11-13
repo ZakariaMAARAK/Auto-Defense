@@ -117,7 +117,7 @@ What the output shows:
 
 ### 2️⃣ Triggering the detection
 
-<img width="1165" height="56" alt="image" src="https://github.com/user-attachments/assets/2130bc68-26f3-42ef-a59a-9e6eec9cc0fc" />
+<img width="1139" height="55" alt="image" src="https://github.com/user-attachments/assets/857b4d2d-0aa2-4f62-8d4b-3d8ac9916950" />
 
 The endpoint queries a domain that MISP lists as an IoC:
 
