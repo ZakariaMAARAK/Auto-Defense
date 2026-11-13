@@ -69,20 +69,16 @@ def main():
     write_log("Active response started")
 
     try:
-        # Read and parse the input from stdin
+        # parse the JSON data from stdin
         input_data = sys.stdin.read()
         write_log(f"Raw input received: {input_data}")
-
-        # Parse the JSON input
         alert = json.loads(input_data).get("parameters", {}).get("alert", {})
         data = alert.get("data", {}).get("misp", {})
         misp_type = data.get("type", "")
         misp_value = data.get("value", "")
-
-        # Log parsed data for debugging
         write_log(f"Parsed MISP data - Type: {misp_type}, Value: {misp_value}")
 
-        # Perform actions based on MISP type
+        # Automatic response according to the MISP type
         if misp_type == "sha256":
             for root, _, files in os.walk(r"C:\Users\LabUser\Desktop"):
                 for file in files:
@@ -92,14 +88,14 @@ def main():
                         file_hash = hashlib.sha256(f.read()).hexdigest()
                         if file_hash == misp_value:
                             delete_file(file_path)
-                            sys.exit(0) # Exit after deleting the file
+                            sys.exit(0) 
             write_log(f"No file found with hash: {misp_value}")
         elif misp_type == "ip-src" or misp_type == "ip-dst":
             block_ip(misp_value)
-            sys.exit(0) # Exit after blocking the IP
+            sys.exit(0) 
         elif misp_type == "domain":
             block_domain(misp_value)
-            sys.exit(0) # Exit after blocking the domain
+            sys.exit(0) 
         else:
             write_log(f"Unsupported MISP type: {misp_type}")
 
@@ -109,7 +105,7 @@ def main():
         write_log(f"Unexpected error: {str(e)}")
     finally:
         write_log("Active response completed.")
-        sys.exit(0) # Ensure the script exits cleanly
+        sys.exit(0) 
 
 if __name__ == "__main__":
     main()
