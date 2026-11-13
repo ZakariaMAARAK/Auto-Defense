@@ -48,8 +48,7 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 
 ### 1. Endpoint (Windows agent): build with PyInstaller
 
-[PyInstaller](https://pyinstaller.org) bundles the Python script and its interpreter into a single `.exe`, so the endpoint **does not need Python installed**.
-
+> [PyInstaller](https://pyinstaller.org) is a Python package used to convert Python scripts (`.py` files) into standalone executable files (`.exe` for Windows). This is essential for running Python scripts in environments where **Python itself may not be installed**.
 
 ```powershell
 pip install -r requirements-build.txt
