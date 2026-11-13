@@ -1,6 +1,6 @@
 # 🛡️ **Automated Threat Mitigation**: MISP + Wazuh + Python 🛡️
 
-> This project allows to simultaneously neutralizes IPs, domains and SHA256 hashes via a standalone executable (.exe) independent of the Python environment.  Wazuh consumes **MISP** threat intelligence and a custom Python Active Response script blocks malicious IPs, redirect malicious domains and purges malicious files on Windows endpoints with no manual intervention.
+> This project allows to simultaneously neutralizes IPs, domains and SHA256 hashes via a standalone executable (.exe) independent of the Python environment.  Wazuh consumes **MISP** threat intelligence and a custom Python script blocks malicious IPs, redirect malicious domains and purges malicious files on Windows endpoints with no manual intervention.
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
 ![Wazuh](https://img.shields.io/badge/Wazuh-SIEM%2FXDR-0A66C2)
@@ -64,7 +64,7 @@ Restart-Service WazuhSvc
 
 ### 2. Wazuh manager
 
-1. Add the configuration from [`config/ossec.conf.snippet`](config/ossec.conf.snippet) to `/var/ossec/etc/ossec.conf`
+1. Add the configuration from [`config/ossec.conf`](config/ossec.conf) to `/var/ossec/etc/ossec.conf`
 2. Add the rules from [`config/local_rules.xml`](config/local_rules.xml) to `/var/ossec/etc/rules/local_rules.xml`
 3. Restart the manager:
    ```bash
@@ -94,7 +94,8 @@ Screenshots captured during the lab, in the order the workflow runs.
 
 ### 1️⃣ Building the executable with PyInstaller
 
-<a href="docs/screenshots/01-pyinstaller-build.png"><img src="docs/screenshots/01-pyinstaller-build.png" alt="PyInstaller build output in PowerShell" width="100%"></a>
+<img width="1822" height="848" alt="22222" src="https://github.com/user-attachments/assets/16f944e0-5b62-4a62-85bd-606b77ab06c2" />
+<img width="1370" height="412" alt="3333333" src="https://github.com/user-attachments/assets/f382aa05-57bf-4f79-adb7-4c5970e96ede" />
 
 The script was compiled from an elevated PowerShell session inside the agent's `active-response\bin` folder:
 
@@ -116,7 +117,7 @@ What the output shows:
 
 ### 2️⃣ Triggering the detection
 
-<a href="docs/screenshots/02-ping-and-active-response-log.png"><img src="docs/screenshots/02-ping-and-active-response-log.png" alt="Ping to the malicious domain and the active-responses.log content" width="100%"></a>
+<img width="1165" height="56" alt="image" src="https://github.com/user-attachments/assets/2130bc68-26f3-42ef-a59a-9e6eec9cc0fc" />
 
 The endpoint queries a domain that MISP lists as an IoC:
 
@@ -148,7 +149,7 @@ The same flow applies to IP addresses (firewall rule) and SHA256 hashes (file re
 
 ### 3️⃣ Alert in the Wazuh dashboard
 
-<a href="docs/screenshots/03-wazuh-dashboard-alert.png"><img src="docs/screenshots/03-wazuh-dashboard-alert.png" alt="Wazuh Threat Hunting events showing the MISP alert" width="100%"></a>
+<img width="1372" height="342" alt="44444" src="https://github.com/user-attachments/assets/3b26c431-89d2-4c51-abaf-df3109cca614" />
 
 In **Threat Hunting → Events**, the highlighted top row is the custom rule firing:
 
@@ -163,7 +164,7 @@ The surrounding events give the full picture of what happened on the endpoint:
 
 ### 4️⃣ The threat intelligence source (MISP)
 
-<a href="docs/screenshots/04-misp-events.png"><img src="docs/screenshots/04-misp-events.png" alt="MISP events list" width="100%"></a>
+<img width="1807" height="830" alt="1111111" src="https://github.com/user-attachments/assets/54d91d12-6a0a-4053-a2f9-de320c068442" />
 
 The MISP instance holds the events and attributes (IP, domain, SHA256 IoCs) that feed the Wazuh integration. Reviewing events here is also how additional use cases can be explored: the same pipeline blocks IPs and deletes files when the matching IoC types are detected.
 
