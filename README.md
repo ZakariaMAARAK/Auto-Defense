@@ -116,8 +116,6 @@ What the output shows:
 
 ### 2️⃣ Triggering the detection
 
-<img width="1139" height="55" alt="image" src="https://github.com/user-attachments/assets/857b4d2d-0aa2-4f62-8d4b-3d8ac9916950" />
-
 The endpoint queries a domain that MISP lists as an IoC:
 
 ```powershell
@@ -126,15 +124,13 @@ ping office.oiqezet.com
 
 The ping does not succeed ("could not find host"): the domain is no longer reachable from this machine. The log excerpt below the command is the actual proof of mitigation.
 
+<img width="1139" height="55" alt="image" src="https://github.com/user-attachments/assets/857b4d2d-0aa2-4f62-8d4b-3d8ac9916950" />
+
 After restarting the Wazuh agent ----> the new executable is loaded) ----> `active-responses.log` records the full execution :
 
-```text
-2025-01-29 03:49:42.016302 - Active response started
-2025-01-29 03:52:07.537202 - Raw input received: {"version":1,"origin":{"name":"node01","module":"wazuh-execd"}, ... }
-2025-01-29 03:52:07.538840 - Parsed MISP data - Type: domain, Value: office.oiqezet.com
-2025-01-29 03:52:07.541114 - Successfully blocked domain: office.oiqezet.com
-2025-01-29 03:52:07.541721 - Active response completed.
-```
+
+<img width="883" height="71" alt="image" src="https://github.com/user-attachments/assets/aca6a3ec-8001-48c1-8763-c75705c08d89" />
+
 
 How to read it:
 
