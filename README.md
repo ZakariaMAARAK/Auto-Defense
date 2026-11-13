@@ -1,4 +1,4 @@
-# 🛡️ Automated Threat Mitigation: MISP + Wazuh + Python
+# 🛡️ Automated Threat Mitigation: MISP + Wazuh + Python 🛡️
 
 > This project allows to simultaneously neutralizes IPs, domains and SHA256 hashes via a standalone executable (.exe) independent of the Python environment.  Wazuh consumes **MISP** threat intelligence and a custom Python Active Response script blocks malicious IPs, redirect malicious domains and purges malicious files on Windows endpoints with no manual intervention.
 
@@ -28,7 +28,7 @@ Manual response to threat intelligence is slow. This project closes the gap betw
 
 Every action and error is written to an audit log (`active-responses.log`).
 
-## Workflow conception:
+## Workflow :
 
 <img width="3960" height="1078" alt="image" src="https://github.com/user-attachments/assets/d1dceeab-b1c0-4c0e-a9ed-40e7bc3ebfc4" />
 
@@ -36,7 +36,7 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 
 
 
-##  Project Files:
+##  Project Files :
 
 | File | Description |
 |---|---|
@@ -44,7 +44,7 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 | [`config/local_rules.xml`](config/local_rules.xml) | Custom Wazuh rules `200003` (domain) and `200004` (SHA256) |
 | [`config/ossec.conf`](config/ossec.conf) | Wazuh manager `<command>` and `<active-response>` configuration |
 
-##  Setup:
+##  Setup :
 
 ### 1. Endpoint (Windows agent): build with PyInstaller
 
@@ -73,14 +73,14 @@ Restart-Service WazuhSvc
 
 > The rules depend on parent rule `100622` (the MISP integration rule), so the MISP ↔ Wazuh integration must already be in place.
 
-##  Testing:
+##  Testing :
 
 1. Open the Wazuh daworflowshboard → **Threat Intelligence → Threat Hunting → Events**
 2. On the Windows endpoint, trigger a MISP-listed domain:
    ```powershell
    ping office.oiqezet.com
    ```
-3. Verify the response:
+3. Verify the response :
    ```powershell
    Get-Content "C:\Program Files (x86)\ossec-agent\active-response\active-responses.log" -Tail 20
    Select-String "office.oiqezet.com" C:\Windows\System32\drivers\etc\hosts
@@ -170,4 +170,4 @@ The MISP instance holds the events and attributes (IP, domain, SHA256 IoCs) that
 
 
 
-Realised by **Zakaria MAARAK**: [GitHub](https://github.com/ZakariaMAARAK) · [LinkedIn](www.linkedin.com/in/zakaria-maarak)
+Authored by **Zakaria MAARAK**: [GitHub](https://github.com/ZakariaMAARAK) · [LinkedIn](https://linkedin.com/in/zakaria-maarak)
