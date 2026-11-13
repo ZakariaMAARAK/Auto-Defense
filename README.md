@@ -70,7 +70,7 @@ Restart-Service WazuhSvc
    sudo service wazuh-manager restart
    ```
 
-> The rules depend on parent rule `100622` (the MISP integration rule), so the MISP ↔ Wazuh integration must already be in place.
+> NB: After each configuration change to the files, do not forget to restart the wazuh manager service for the changes to take effect.
 
 ##  Testing :
 
