@@ -1,4 +1,4 @@
-# 🛡️ Automated Threat Mitigation: MISP + Wazuh + Python 🛡️
+# 🛡️ **Automated Threat Mitigation**: MISP + Wazuh + Python 🛡️
 
 > This project allows to simultaneously neutralizes IPs, domains and SHA256 hashes via a standalone executable (.exe) independent of the Python environment.  Wazuh consumes **MISP** threat intelligence and a custom Python Active Response script blocks malicious IPs, redirect malicious domains and purges malicious files on Windows endpoints with no manual intervention.
 
