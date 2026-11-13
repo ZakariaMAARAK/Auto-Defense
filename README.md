@@ -165,7 +165,7 @@ The surrounding events give the full picture of what happened on the endpoint:
 
 <img width="1807" height="830" alt="1111111" src="https://github.com/user-attachments/assets/54d91d12-6a0a-4053-a2f9-de320c068442" />
 
-The MISP instance holds the events and attributes (IP, domain, SHA256 IoCs) that feed the Wazuh integration. Reviewing events here is also how additional use cases can be explored: the same pipeline blocks IPs and deletes files when the matching IoC types are detected.
+The MISP instance holds the events and attributes (IP, domain, SHA256) that feed the Wazuh integration. Reviewing events here is also how additional use cases can be explored: the same pipeline blocks IPs and deletes files when the matching IoC types are detected.
 
 
 
