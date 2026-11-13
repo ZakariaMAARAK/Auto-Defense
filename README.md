@@ -168,6 +168,8 @@ The surrounding events give the full picture of what happened on the endpoint:
 The MISP instance holds the events and attributes (IP, domain, SHA256) that feed the Wazuh integration. Reviewing events here is also how additional use cases can be explored: the same pipeline blocks IPs and deletes files when the matching IoC types are detected.
 
 
+---
+
 
 
 Authored by **Zakaria MAARAK**: [GitHub](https://github.com/ZakariaMAARAK) · [LinkedIn](https://linkedin.com/in/zakaria-maarak)
