@@ -126,7 +126,7 @@ ping office.oiqezet.com
 
 The ping does not succeed ("could not find host"): the domain is no longer reachable from this machine. The log excerpt below the command is the actual proof of mitigation.
 
-After restarting the Wazuh agent (so the new executable is loaded), `active-responses.log` records the full execution:
+After restarting the Wazuh agent ----> the new executable is loaded) ----> `active-responses.log` records the full execution :
 
 ```text
 2025-01-29 03:49:42.016302 - Active response started
