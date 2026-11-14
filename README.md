@@ -113,7 +113,7 @@ What the output shows:
 
 ### 2️⃣ Testing: Triggering the detection
 
-1. Open the Wazuh daworflowshboard → **Threat Intelligence → Threat Hunting → Events**
+1. Open the Wazuh dashboard → **Threat Intelligence → Threat Hunting → Events**
 2. On the Windows endpoint, trigger a MISP-listed domain:
    ```powershell
    ping office.oiqezet.com
