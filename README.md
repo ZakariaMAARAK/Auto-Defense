@@ -34,7 +34,7 @@ Every action and error is written to an audit log (`active-responses.log`).
 
 ## Tools needed :
 
-• Wazuh Manager
+• Wazuh manager
 
 • Wazuh agent (must be installed on the Windows Endpoint)
 
