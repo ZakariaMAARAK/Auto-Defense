@@ -73,19 +73,10 @@ pip install -r requirements-build.txt
 # --onefile: single standalone .exe   |   -w: no console window
 pyinstaller.exe --onefile -w misp-ar.py
 
-Copy-Item .\dist\misp-ar.exe "C:\Program Files (x86)\ossec-agent\active-response\bin\"
-Restart-Service WazuhSvc
-
 ```
 
 <img width="1822" height="848" alt="22222" src="https://github.com/user-attachments/assets/16f944e0-5b62-4a62-85bd-606b77ab06c2" />
 <img width="1370" height="412" alt="3333333" src="https://github.com/user-attachments/assets/f382aa05-57bf-4f79-adb7-4c5970e96ede" />
-
-The script was compiled from an elevated PowerShell session inside the agent's `active-response\bin` folder:
-
-```powershell
-pyinstaller.exe --onefile -w misp-ar.py
-```
 
 What the output shows:
 
@@ -97,7 +88,14 @@ What the output shows:
 | **EXE** | The Windows bootloader is copied, the manifest and icon are embedded and the archive is appended. The build ends with *"Building EXE … completed successfully"* |
 | **Output** | `dist\misp-ar.exe`, a standalone executable that runs **without Python installed** |
 
-> ⚠️ **Warning at the top of the log:** PyInstaller states that running it as administrator is not necessary and that version 7.0 will block it. Build from a **normal (non-admin) terminal** and only elevate to copy the file into `Program Files (x86)` and restart `WazuhSvc`. Also prefer building in a separate working folder (as `build.ps1` does), so the `build/`, `dist/` and `.spec` files do not clutter the agent's `bin` directory.
+After the script was compiled from an elevated PowerShell session inside the agent's `active-response\bin` folder, move the script to the `C:\Program Files (x86)\ossec-agent\active-response\bin\` and then restart the Wazuh agent service:
+
+```powershell
+Copy-Item .\dist\misp-ar.exe "C:\Program Files (x86)\ossec-agent\active-response\bin\"
+Restart-Service WazuhSvc
+```
+
+> ⚠️ **Warning at the top of the log:** PyInstaller states that running it as administrator is not necessary and that version 7.0 will block it. Build from a **normal (non-admin) terminal** and only elevate to copy the file into `Program Files (x86)` and restart `WazuhSvc`.
 
 ###  Wazuh manager setup:
 
