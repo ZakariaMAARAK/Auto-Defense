@@ -35,10 +35,15 @@ Every action and error is written to an audit log (`active-responses.log`).
 ## Tools needed :
 
 • Wazuh Manager
+
 • Wazuh agent (must be installed on the Windows Endpoint)
+
 • MISP
+
 • Python
-• PyInstaller
+
+•PyInstaller
+
 • PowerShell
 
 ## Workflow :
