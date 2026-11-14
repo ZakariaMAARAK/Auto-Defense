@@ -71,18 +71,7 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 
 > 📌**Note:** After each file configuration change, do not forget to restart the wazuh manager service for the changes to take effect.
 
-##  Testing :
 
-1. Open the Wazuh daworflowshboard → **Threat Intelligence → Threat Hunting → Events**
-2. On the Windows endpoint, trigger a MISP-listed domain:
-   ```powershell
-   ping office.oiqezet.com
-   ```
-3. Verify the response :
-   ```powershell
-   Get-Content "C:\Program Files (x86)\ossec-agent\active-response\active-responses.log" -Tail 20
-   Select-String "office.oiqezet.com" C:\Windows\System32\drivers\etc\hosts
-   ```
 
 Expected: the alert appears in Wazuh, the log shows a successful execution, and the domain resolves to `0.0.0.0`.
 
@@ -122,7 +111,18 @@ What the output shows:
 
 > ⚠️ **Warning at the top of the log:** PyInstaller states that running it as administrator is not necessary and that version 7.0 will block it. Build from a **normal (non-admin) terminal** and only elevate to copy the file into `Program Files (x86)` and restart `WazuhSvc`. Also prefer building in a separate working folder (as `build.ps1` does), so the `build/`, `dist/` and `.spec` files do not clutter the agent's `bin` directory.
 
-### 2️⃣ Triggering the detection
+### 2️⃣ Testing: Triggering the detection
+
+1. Open the Wazuh daworflowshboard → **Threat Intelligence → Threat Hunting → Events**
+2. On the Windows endpoint, trigger a MISP-listed domain:
+   ```powershell
+   ping office.oiqezet.com
+   ```
+3. Verify the response :
+   ```powershell
+   Get-Content "C:\Program Files (x86)\ossec-agent\active-response\active-responses.log" -Tail 20
+   Select-String "office.oiqezet.com" C:\Windows\System32\drivers\etc\hosts
+   ```
 
 The endpoint queries a domain that MISP lists as an IoC:
 
