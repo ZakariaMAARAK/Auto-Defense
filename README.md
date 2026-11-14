@@ -8,7 +8,6 @@
 ![Platform](https://img.shields.io/badge/Endpoint-Windows-lightgrey?logo=windows)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
----
 
 ##  Overview:
 
@@ -28,8 +27,6 @@ Manual response to threat intelligence is slow. This project closes the gap betw
 
 Every action and error is written to an audit log (`active-responses.log`).
 
-
----
 
 
 ## Tools needed :
