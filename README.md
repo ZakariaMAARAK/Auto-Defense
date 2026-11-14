@@ -69,7 +69,7 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
    sudo service wazuh-manager restart
    ```
 
-> 📌** NB:** After each configuration change to the files, do not forget to restart the wazuh manager service for the changes to take effect.
+> 📌**Note:** After each configuration change to the files, do not forget to restart the wazuh manager service for the changes to take effect.
 
 ##  Testing :
 
