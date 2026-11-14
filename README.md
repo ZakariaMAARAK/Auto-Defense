@@ -28,6 +28,19 @@ Manual response to threat intelligence is slow. This project closes the gap betw
 
 Every action and error is written to an audit log (`active-responses.log`).
 
+
+---
+
+
+## Tools needed :
+
+• Wazuh Manager
+• Wazuh agent (must be installed on the Windows Endpoint)
+• MISP
+• Python
+• PyInstaller
+• PowerShell
+
 ## Workflow :
 
 <img width="3960" height="1078" alt="image" src="https://github.com/user-attachments/assets/d1dceeab-b1c0-4c0e-a9ed-40e7bc3ebfc4" />
