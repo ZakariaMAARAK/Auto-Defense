@@ -144,7 +144,7 @@ The ping does not succeed ("could not find host"): the domain is no longer reach
 
 <img width="1139" height="55" alt="image" src="https://github.com/user-attachments/assets/857b4d2d-0aa2-4f62-8d4b-3d8ac9916950" />
 
-After restarting the Wazuh agent ----> the new executable is loaded ----> `active-responses.log` records the full execution :
+After restarting the Wazuh agent ----> the new executable is loaded ----> `active-responses.log` records the execution :
 
 
 <img width="883" height="71" alt="image" src="https://github.com/user-attachments/assets/aca6a3ec-8001-48c1-8763-c75705c08d89" />
