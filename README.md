@@ -104,6 +104,7 @@ To enable Wazuh to execute the python script in response to MISP alerts, modify 
 1. Add the configuration from [`config/ossec.conf`](config/ossec.conf) to `/var/ossec/etc/ossec.conf`
 2. Add the rules from [`config/local_rules.xml`](config/local_rules.xml) to `/var/ossec/etc/rules/local_rules.xml`
 3. Restart the manager:
+   
    ```bash
    sudo service wazuh-manager restart
    ```
