@@ -23,7 +23,7 @@ Manual response to threat intelligence is slow. This project closes the gap betw
 | IoC type (MISP) | Automated action | Mechanism |
 |---|---|---|
 | `ip-src` / IP address | Block inbound traffic | Windows Firewall rule via `netsh` |
-| `domain` | Sinkhole the domain | Redirect to `0.0.0.0` in the `hosts` file |
+| `Domain` | Sinkhole the domain | Redirect to `0.0.0.0` in the `hosts` file |
 | `SHA256` | Delete the malicious file | `os.remove(file_path)` on the detected path |
 
 Every action and error is written to an audit log (`active-responses.log`).
@@ -66,7 +66,7 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 
 ### 1. Endpoint (Windows agent): build with PyInstaller
 
-> [PyInstaller](https://pyinstaller.org) is a Python package used to convert Python scripts (`.py` files) into standalone executable files (`.exe` for Windows). This is essential for running Python scripts in environments where **Python itself may not be installed**.
+> 💡 [PyInstaller](https://pyinstaller.org) is a Python package used to convert Python scripts (`.py` files) into standalone executable files (`.exe` for Windows). This is essential for running Python scripts in environments where **Python itself may not be installed**.
 
 ```powershell
 pip install -r requirements-build.txt
