@@ -42,7 +42,7 @@ Every action and error is written to an audit log (`active-responses.log`).
 
 • Python
 
-•PyInstaller
+• PyInstaller
 
 • PowerShell
 
