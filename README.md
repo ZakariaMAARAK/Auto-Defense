@@ -22,7 +22,7 @@ Manual response to threat intelligence is slow. This project closes the gap betw
 
 | IoC type (MISP) | Automated action | Mechanism |
 |---|---|---|
-| `ip-src` / IP address | Block inbound traffic | Windows Firewall rule via `netsh` |
+| `ip-src` | Block inbound traffic | Windows Firewall rule via `netsh` |
 | `Domain` | Sinkhole the domain | Redirect to `0.0.0.0` in the `hosts` file |
 | `SHA256` | Delete the malicious file | `os.remove(file_path)` on the detected path |
 
