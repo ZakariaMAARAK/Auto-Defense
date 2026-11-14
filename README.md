@@ -60,24 +60,9 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 | [`config/ossec.conf`](config/ossec.conf) | Wazuh manager `<command>` and `<active-response>` configuration |
 
 
-###  Wazuh manager
-
-1. Add the configuration from [`config/ossec.conf`](config/ossec.conf) to `/var/ossec/etc/ossec.conf`
-2. Add the rules from [`config/local_rules.xml`](config/local_rules.xml) to `/var/ossec/etc/rules/local_rules.xml`
-3. Restart the manager:
-   ```bash
-   sudo service wazuh-manager restart
-   ```
-
-> 📌**Note:** After each file configuration change, do not forget to restart the wazuh manager service for the changes to take effect.
-
-
-
-Expected: the alert appears in Wazuh, the log shows a successful execution, and the domain resolves to `0.0.0.0`.
-
 ## Lab Walkthrough & Setup :
 
-### 1️⃣ Endpoint (Windows agent): Building the executable with PyInstaller
+### Endpoint (Windows agent): Building the executable with PyInstaller
 
 > 💡 [PyInstaller](https://pyinstaller.org) is a Python package used to convert Python scripts (`.py` files) into standalone executable files (`.exe` for Windows). This is essential for running Python scripts in environments where **Python itself may not be installed**.
 
@@ -87,6 +72,9 @@ pip install -r requirements-build.txt
 
 # --onefile: single standalone .exe   |   -w: no console window
 pyinstaller.exe --onefile -w --name misp-ar src\misp-ar.py
+
+Copy-Item .\dist\misp-ar.exe "C:\Program Files (x86)\ossec-agent\active-response\bin\"
+Restart-Service WazuhSvc
 
 ```
 
@@ -111,7 +99,22 @@ What the output shows:
 
 > ⚠️ **Warning at the top of the log:** PyInstaller states that running it as administrator is not necessary and that version 7.0 will block it. Build from a **normal (non-admin) terminal** and only elevate to copy the file into `Program Files (x86)` and restart `WazuhSvc`. Also prefer building in a separate working folder (as `build.ps1` does), so the `build/`, `dist/` and `.spec` files do not clutter the agent's `bin` directory.
 
-### 2️⃣ Testing: Triggering the detection
+###  Wazuh manager setup:
+
+1. Add the configuration from [`config/ossec.conf`](config/ossec.conf) to `/var/ossec/etc/ossec.conf`
+2. Add the rules from [`config/local_rules.xml`](config/local_rules.xml) to `/var/ossec/etc/rules/local_rules.xml`
+3. Restart the manager:
+   ```bash
+   sudo service wazuh-manager restart
+   ```
+
+> 📌**Note:** After each file configuration change, do not forget to restart the wazuh manager service for the changes to take effect.
+
+Expected: the alert appears in Wazuh, the log shows a successful execution, and the domain resolves to `0.0.0.0`.
+
+
+
+###  Testing: Triggering the detection
 
 1. Open the Wazuh dashboard → **Threat Intelligence → Threat Hunting → Events**
 2. On the Windows endpoint, trigger a MISP-listed domain:
@@ -145,7 +148,7 @@ How to read it:
 
 The same flow applies to IP addresses (firewall rule) and SHA256 hashes (file removal).
 
-### 3️⃣ Alert in the Wazuh dashboard
+###  Alert in the Wazuh dashboard
 
 <img width="1372" height="342" alt="44444" src="https://github.com/user-attachments/assets/3b26c431-89d2-4c51-abaf-df3109cca614" />
 
@@ -160,7 +163,7 @@ The surrounding events give the full picture of what happened on the endpoint:
 - **Sysmon Events 1, 10 and 7**: process creation, process access and image load around the execution.
 - **Highlighted lower rows**: `misp-ar.exe` loading runtime DLLs from a `_MEI…` folder in `C:\Windows\Temp`. This is normal behavior for a `--onefile` PyInstaller executable, which unpacks itself to a temporary folder at launch. It is worth knowing because security rules can flag it as *"executable loaded from the Temp directory"*, so expect (and tune for) this kind of alert.
 
-### 4️⃣ The threat intelligence source (MISP)
+###  The MISP events dashboard:
 
 <img width="1807" height="830" alt="1111111" src="https://github.com/user-attachments/assets/54d91d12-6a0a-4053-a2f9-de320c068442" />
 
