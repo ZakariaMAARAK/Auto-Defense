@@ -74,8 +74,6 @@ pip install -r requirements-build.txt
 # --onefile: single standalone .exe   |   -w: no console window
 pyinstaller.exe --onefile -w --name misp-ar src\misp-ar.py
 
-Copy-Item .\dist\misp-ar.exe "C:\Program Files (x86)\ossec-agent\active-response\bin\"
-Restart-Service WazuhSvc
 ```
 
 
