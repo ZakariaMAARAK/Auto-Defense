@@ -62,22 +62,8 @@ The diagram covers both the **build/deploy pipeline** (Python script → PyInsta
 | [`config/local_rules.xml`](config/local_rules.xml) | Custom Wazuh rules `200003` (domain) and `200004` (SHA256) |
 | [`config/ossec.conf`](config/ossec.conf) | Wazuh manager `<command>` and `<active-response>` configuration |
 
-##  Setup :
 
-### 1. Endpoint (Windows agent): build with PyInstaller
-
-> 💡 [PyInstaller](https://pyinstaller.org) is a Python package used to convert Python scripts (`.py` files) into standalone executable files (`.exe` for Windows). This is essential for running Python scripts in environments where **Python itself may not be installed**.
-
-```powershell
-pip install -r requirements-build.txt
-
-# --onefile: single standalone .exe   |   -w: no console window
-pyinstaller.exe --onefile -w --name misp-ar src\misp-ar.py
-
-```
-
-
-### 2. Wazuh manager
+###  Wazuh manager
 
 1. Add the configuration from [`config/ossec.conf`](config/ossec.conf) to `/var/ossec/etc/ossec.conf`
 2. Add the rules from [`config/local_rules.xml`](config/local_rules.xml) to `/var/ossec/etc/rules/local_rules.xml`
@@ -103,11 +89,20 @@ pyinstaller.exe --onefile -w --name misp-ar src\misp-ar.py
 
 Expected: the alert appears in Wazuh, the log shows a successful execution, and the domain resolves to `0.0.0.0`.
 
-## Lab Walkthrough & Evidence:
+## Lab Walkthrough & Setup :
 
-Screenshots captured during the lab, in the order the workflow runs.
+### 1️⃣ Endpoint (Windows agent): Building the executable with PyInstaller
 
-### 1️⃣ Building the executable with PyInstaller
+> 💡 [PyInstaller](https://pyinstaller.org) is a Python package used to convert Python scripts (`.py` files) into standalone executable files (`.exe` for Windows). This is essential for running Python scripts in environments where **Python itself may not be installed**.
+
+
+```powershell
+pip install -r requirements-build.txt
+
+# --onefile: single standalone .exe   |   -w: no console window
+pyinstaller.exe --onefile -w --name misp-ar src\misp-ar.py
+
+```
 
 <img width="1822" height="848" alt="22222" src="https://github.com/user-attachments/assets/16f944e0-5b62-4a62-85bd-606b77ab06c2" />
 <img width="1370" height="412" alt="3333333" src="https://github.com/user-attachments/assets/f382aa05-57bf-4f79-adb7-4c5970e96ede" />
