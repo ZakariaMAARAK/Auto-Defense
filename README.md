@@ -124,11 +124,6 @@ What the output shows:
    Select-String "office.oiqezet.com" C:\Windows\System32\drivers\etc\hosts
    ```
 
-The endpoint queries a domain that MISP lists as an IoC:
-
-```powershell
-ping office.oiqezet.com
-```
 
 The ping does not succeed ("could not find host"): the domain is no longer reachable from this machine. The log excerpt below the command is the actual proof of mitigation.
 
